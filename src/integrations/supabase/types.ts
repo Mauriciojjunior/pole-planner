@@ -14,16 +14,732 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      audit_logs: {
+        Row: {
+          action: string
+          actor_id: string | null
+          actor_type: string | null
+          created_at: string | null
+          entity_id: string | null
+          entity_type: string
+          id: string
+          ip_address: unknown
+          new_values: Json | null
+          old_values: Json | null
+          tenant_id: string | null
+          user_agent: string | null
+        }
+        Insert: {
+          action: string
+          actor_id?: string | null
+          actor_type?: string | null
+          created_at?: string | null
+          entity_id?: string | null
+          entity_type: string
+          id?: string
+          ip_address?: unknown
+          new_values?: Json | null
+          old_values?: Json | null
+          tenant_id?: string | null
+          user_agent?: string | null
+        }
+        Update: {
+          action?: string
+          actor_id?: string | null
+          actor_type?: string | null
+          created_at?: string | null
+          entity_id?: string | null
+          entity_type?: string
+          id?: string
+          ip_address?: unknown
+          new_values?: Json | null
+          old_values?: Json | null
+          tenant_id?: string | null
+          user_agent?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "audit_logs_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "teachers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      blocks: {
+        Row: {
+          created_at: string | null
+          ends_at: string
+          id: string
+          is_recurring: boolean | null
+          reason: string | null
+          recurrence_rule: string | null
+          starts_at: string
+          tenant_id: string
+          title: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          ends_at: string
+          id?: string
+          is_recurring?: boolean | null
+          reason?: string | null
+          recurrence_rule?: string | null
+          starts_at: string
+          tenant_id: string
+          title?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          ends_at?: string
+          id?: string
+          is_recurring?: boolean | null
+          reason?: string | null
+          recurrence_rule?: string | null
+          starts_at?: string
+          tenant_id?: string
+          title?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blocks_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "teachers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      bookings: {
+        Row: {
+          attended: boolean | null
+          booked_at: string | null
+          cancelled_at: string | null
+          class_id: string
+          created_at: string | null
+          id: string
+          notes: string | null
+          status: Database["public"]["Enums"]["booking_status"] | null
+          student_id: string
+          tenant_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          attended?: boolean | null
+          booked_at?: string | null
+          cancelled_at?: string | null
+          class_id: string
+          created_at?: string | null
+          id?: string
+          notes?: string | null
+          status?: Database["public"]["Enums"]["booking_status"] | null
+          student_id: string
+          tenant_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          attended?: boolean | null
+          booked_at?: string | null
+          cancelled_at?: string | null
+          class_id?: string
+          created_at?: string | null
+          id?: string
+          notes?: string | null
+          status?: Database["public"]["Enums"]["booking_status"] | null
+          student_id?: string
+          tenant_id?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bookings_class_id_fkey"
+            columns: ["class_id"]
+            isOneToOne: false
+            referencedRelation: "classes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bookings_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bookings_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "teachers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      class_types: {
+        Row: {
+          color: string | null
+          created_at: string | null
+          description: string | null
+          duration_minutes: number
+          id: string
+          is_active: boolean | null
+          is_public: boolean | null
+          max_students: number
+          name: string
+          tenant_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          color?: string | null
+          created_at?: string | null
+          description?: string | null
+          duration_minutes?: number
+          id?: string
+          is_active?: boolean | null
+          is_public?: boolean | null
+          max_students?: number
+          name: string
+          tenant_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          color?: string | null
+          created_at?: string | null
+          description?: string | null
+          duration_minutes?: number
+          id?: string
+          is_active?: boolean | null
+          is_public?: boolean | null
+          max_students?: number
+          name?: string
+          tenant_id?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "class_types_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "teachers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      classes: {
+        Row: {
+          cancelled_reason: string | null
+          class_type_id: string
+          created_at: string | null
+          ends_at: string
+          id: string
+          is_cancelled: boolean | null
+          max_students: number
+          notes: string | null
+          schedule_id: string | null
+          starts_at: string
+          tenant_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          cancelled_reason?: string | null
+          class_type_id: string
+          created_at?: string | null
+          ends_at: string
+          id?: string
+          is_cancelled?: boolean | null
+          max_students: number
+          notes?: string | null
+          schedule_id?: string | null
+          starts_at: string
+          tenant_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          cancelled_reason?: string | null
+          class_type_id?: string
+          created_at?: string | null
+          ends_at?: string
+          id?: string
+          is_cancelled?: boolean | null
+          max_students?: number
+          notes?: string | null
+          schedule_id?: string | null
+          starts_at?: string
+          tenant_id?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "classes_class_type_id_fkey"
+            columns: ["class_type_id"]
+            isOneToOne: false
+            referencedRelation: "class_types"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "classes_schedule_id_fkey"
+            columns: ["schedule_id"]
+            isOneToOne: false
+            referencedRelation: "schedules"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "classes_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "teachers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      jobs: {
+        Row: {
+          attempts: number | null
+          completed_at: string | null
+          created_at: string | null
+          error: string | null
+          id: string
+          max_attempts: number | null
+          payload: Json
+          priority: number | null
+          result: Json | null
+          scheduled_at: string | null
+          started_at: string | null
+          status: Database["public"]["Enums"]["job_status"] | null
+          tenant_id: string | null
+          type: string
+        }
+        Insert: {
+          attempts?: number | null
+          completed_at?: string | null
+          created_at?: string | null
+          error?: string | null
+          id?: string
+          max_attempts?: number | null
+          payload?: Json
+          priority?: number | null
+          result?: Json | null
+          scheduled_at?: string | null
+          started_at?: string | null
+          status?: Database["public"]["Enums"]["job_status"] | null
+          tenant_id?: string | null
+          type: string
+        }
+        Update: {
+          attempts?: number | null
+          completed_at?: string | null
+          created_at?: string | null
+          error?: string | null
+          id?: string
+          max_attempts?: number | null
+          payload?: Json
+          priority?: number | null
+          result?: Json | null
+          scheduled_at?: string | null
+          started_at?: string | null
+          status?: Database["public"]["Enums"]["job_status"] | null
+          tenant_id?: string | null
+          type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "jobs_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "teachers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      plans: {
+        Row: {
+          classes_per_month: number | null
+          created_at: string | null
+          currency: string | null
+          description: string | null
+          duration_days: number
+          id: string
+          is_active: boolean | null
+          name: string
+          price_cents: number
+          tenant_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          classes_per_month?: number | null
+          created_at?: string | null
+          currency?: string | null
+          description?: string | null
+          duration_days?: number
+          id?: string
+          is_active?: boolean | null
+          name: string
+          price_cents: number
+          tenant_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          classes_per_month?: number | null
+          created_at?: string | null
+          currency?: string | null
+          description?: string | null
+          duration_days?: number
+          id?: string
+          is_active?: boolean | null
+          name?: string
+          price_cents?: number
+          tenant_id?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "plans_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "teachers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string | null
+          email: string
+          external_auth_id: string | null
+          id: string
+          name: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string | null
+          email: string
+          external_auth_id?: string | null
+          id?: string
+          name?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string | null
+          email?: string
+          external_auth_id?: string | null
+          id?: string
+          name?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      schedules: {
+        Row: {
+          class_type_id: string
+          created_at: string | null
+          day_of_week: Database["public"]["Enums"]["day_of_week"]
+          end_time: string
+          id: string
+          is_active: boolean | null
+          is_public: boolean | null
+          max_students: number | null
+          start_time: string
+          tenant_id: string
+          updated_at: string | null
+          valid_from: string | null
+          valid_until: string | null
+        }
+        Insert: {
+          class_type_id: string
+          created_at?: string | null
+          day_of_week: Database["public"]["Enums"]["day_of_week"]
+          end_time: string
+          id?: string
+          is_active?: boolean | null
+          is_public?: boolean | null
+          max_students?: number | null
+          start_time: string
+          tenant_id: string
+          updated_at?: string | null
+          valid_from?: string | null
+          valid_until?: string | null
+        }
+        Update: {
+          class_type_id?: string
+          created_at?: string | null
+          day_of_week?: Database["public"]["Enums"]["day_of_week"]
+          end_time?: string
+          id?: string
+          is_active?: boolean | null
+          is_public?: boolean | null
+          max_students?: number | null
+          start_time?: string
+          tenant_id?: string
+          updated_at?: string | null
+          valid_from?: string | null
+          valid_until?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "schedules_class_type_id_fkey"
+            columns: ["class_type_id"]
+            isOneToOne: false
+            referencedRelation: "class_types"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "schedules_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "teachers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      students: {
+        Row: {
+          created_at: string | null
+          email: string | null
+          emergency_contact: string | null
+          emergency_phone: string | null
+          id: string
+          is_active: boolean | null
+          name: string
+          notes: string | null
+          phone: string | null
+          profile_id: string | null
+          tenant_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          email?: string | null
+          emergency_contact?: string | null
+          emergency_phone?: string | null
+          id?: string
+          is_active?: boolean | null
+          name: string
+          notes?: string | null
+          phone?: string | null
+          profile_id?: string | null
+          tenant_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          email?: string | null
+          emergency_contact?: string | null
+          emergency_phone?: string | null
+          id?: string
+          is_active?: boolean | null
+          name?: string
+          notes?: string | null
+          phone?: string | null
+          profile_id?: string | null
+          tenant_id?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "students_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "students_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "teachers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      subscriptions: {
+        Row: {
+          auto_renew: boolean | null
+          cancelled_at: string | null
+          classes_remaining: number | null
+          created_at: string | null
+          ends_at: string
+          id: string
+          plan_id: string
+          starts_at: string
+          status: Database["public"]["Enums"]["subscription_status"] | null
+          student_id: string
+          tenant_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          auto_renew?: boolean | null
+          cancelled_at?: string | null
+          classes_remaining?: number | null
+          created_at?: string | null
+          ends_at: string
+          id?: string
+          plan_id: string
+          starts_at: string
+          status?: Database["public"]["Enums"]["subscription_status"] | null
+          student_id: string
+          tenant_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          auto_renew?: boolean | null
+          cancelled_at?: string | null
+          classes_remaining?: number | null
+          created_at?: string | null
+          ends_at?: string
+          id?: string
+          plan_id?: string
+          starts_at?: string
+          status?: Database["public"]["Enums"]["subscription_status"] | null
+          student_id?: string
+          tenant_id?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "subscriptions_plan_id_fkey"
+            columns: ["plan_id"]
+            isOneToOne: false
+            referencedRelation: "plans"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "subscriptions_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "subscriptions_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "teachers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      teachers: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          created_at: string | null
+          email: string
+          id: string
+          is_active: boolean | null
+          name: string
+          phone: string | null
+          settings: Json | null
+          slug: string
+          timezone: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string | null
+          email: string
+          id?: string
+          is_active?: boolean | null
+          name: string
+          phone?: string | null
+          settings?: Json | null
+          slug: string
+          timezone?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string | null
+          email?: string
+          id?: string
+          is_active?: boolean | null
+          name?: string
+          phone?: string | null
+          settings?: Json | null
+          slug?: string
+          timezone?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string | null
+          id: string
+          profile_id: string
+          role: Database["public"]["Enums"]["app_role"]
+          tenant_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          profile_id: string
+          role: Database["public"]["Enums"]["app_role"]
+          tenant_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          profile_id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          tenant_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_roles_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_roles_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "teachers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _profile_id: string
+          _role: Database["public"]["Enums"]["app_role"]
+          _tenant_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "teacher" | "student"
+      booking_status:
+        | "pending"
+        | "confirmed"
+        | "cancelled"
+        | "completed"
+        | "no_show"
+      day_of_week:
+        | "monday"
+        | "tuesday"
+        | "wednesday"
+        | "thursday"
+        | "friday"
+        | "saturday"
+        | "sunday"
+      job_status: "pending" | "processing" | "completed" | "failed" | "dead"
+      subscription_status: "active" | "paused" | "cancelled" | "expired"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +866,26 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "teacher", "student"],
+      booking_status: [
+        "pending",
+        "confirmed",
+        "cancelled",
+        "completed",
+        "no_show",
+      ],
+      day_of_week: [
+        "monday",
+        "tuesday",
+        "wednesday",
+        "thursday",
+        "friday",
+        "saturday",
+        "sunday",
+      ],
+      job_status: ["pending", "processing", "completed", "failed", "dead"],
+      subscription_status: ["active", "paused", "cancelled", "expired"],
+    },
   },
 } as const
