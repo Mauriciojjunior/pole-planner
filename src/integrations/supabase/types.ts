@@ -713,6 +713,8 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_current_profile_id: { Args: never; Returns: string }
+      get_current_tenant_id: { Args: never; Returns: string }
       has_role: {
         Args: {
           _profile_id: string
