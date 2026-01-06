@@ -1,0 +1,41 @@
+# ConfigMap for non-sensitive configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pole-agenda-config
+  namespace: pole-agenda
+  labels:
+    app.kubernetes.io/name: pole-agenda
+    app.kubernetes.io/component: config
+data:
+  # Application
+  APP_ENV: "production"
+  APP_PORT: "3000"
+  APP_LOG_LEVEL: "info"
+  APP_LOG_FORMAT: "json"
+
+  # Database (host/port only - credentials in Secret)
+  DATABASE_HOST: "postgres.database.svc.cluster.local"
+  DATABASE_PORT: "5432"
+  DATABASE_NAME: "pole_agenda"
+  DATABASE_POOL_MIN: "2"
+  DATABASE_POOL_MAX: "10"
+
+  # Authentication
+  AUTH_PROVIDER: "supabase"
+  AUTH_ISSUER: "https://your-project.supabase.co/auth/v1"
+
+  # Storage
+  STORAGE_PROVIDER: "s3"
+  S3_REGION: "us-east-1"
+  S3_BUCKET: "pole-agenda-files"
+  # S3_ENDPOINT: "http://minio.storage.svc.cluster.local:9000"  # For MinIO
+
+  # Features
+  FEATURE_AUDIT_LOGGING: "true"
+  FEATURE_RATE_LIMITING: "true"
+
+  # Security
+  CORS_ORIGINS: "https://app.pole-agenda.com"
+  RATE_LIMIT_WINDOW_MS: "60000"
+  RATE_LIMIT_MAX_REQUESTS: "100"

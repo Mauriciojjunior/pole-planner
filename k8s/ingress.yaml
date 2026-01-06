@@ -1,0 +1,36 @@
+# Ingress for external access (cloud-agnostic)
+# Works with: nginx-ingress, traefik, haproxy, etc.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: pole-agenda-api
+  namespace: pole-agenda
+  labels:
+    app.kubernetes.io/name: pole-agenda
+    app.kubernetes.io/component: api
+  annotations:
+    # Common annotations (adjust for your ingress controller)
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "10m"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "60"
+    # Rate limiting
+    nginx.ingress.kubernetes.io/limit-rps: "100"
+    nginx.ingress.kubernetes.io/limit-connections: "50"
+    # CORS handled by application
+spec:
+  tls:
+    - hosts:
+        - api.pole-agenda.com
+      secretName: pole-agenda-tls
+  rules:
+    - host: api.pole-agenda.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: pole-agenda-api
+                port:
+                  name: http

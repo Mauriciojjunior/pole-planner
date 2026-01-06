@@ -1,0 +1,15 @@
+# Pod Disruption Budget for high availability
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: pole-agenda-api
+  namespace: pole-agenda
+  labels:
+    app.kubernetes.io/name: pole-agenda
+    app.kubernetes.io/component: api
+spec:
+  minAvailable: 1  # At least 1 pod must be available during disruptions
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: pole-agenda
+      app.kubernetes.io/component: api

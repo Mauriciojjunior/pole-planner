@@ -1,0 +1,39 @@
+# Service to expose API
+apiVersion: v1
+kind: Service
+metadata:
+  name: pole-agenda-api
+  namespace: pole-agenda
+  labels:
+    app.kubernetes.io/name: pole-agenda
+    app.kubernetes.io/component: api
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+      protocol: TCP
+  selector:
+    app.kubernetes.io/name: pole-agenda
+    app.kubernetes.io/component: api
+---
+# Headless service for direct pod access (if needed)
+apiVersion: v1
+kind: Service
+metadata:
+  name: pole-agenda-api-headless
+  namespace: pole-agenda
+  labels:
+    app.kubernetes.io/name: pole-agenda
+    app.kubernetes.io/component: api
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+    - name: http
+      port: 3000
+      targetPort: http
+  selector:
+    app.kubernetes.io/name: pole-agenda
+    app.kubernetes.io/component: api
