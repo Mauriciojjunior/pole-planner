@@ -1,0 +1,8 @@
+# Namespace for pole-agenda application
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pole-agenda
+  labels:
+    app.kubernetes.io/name: pole-agenda
+    app.kubernetes.io/part-of: pole-agenda

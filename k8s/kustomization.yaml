@@ -1,0 +1,33 @@
+# Kustomize configuration for easy deployment
+# Usage: kubectl apply -k k8s/
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: pole-agenda
+
+resources:
+  - namespace.yaml
+  - serviceaccount.yaml
+  - configmap.yaml
+  - secret.yaml
+  - deployment.yaml
+  - worker-deployment.yaml
+  - service.yaml
+  - ingress.yaml
+  - hpa.yaml
+  - pdb.yaml
+  - networkpolicy.yaml
+
+# Common labels for all resources
+commonLabels:
+  app.kubernetes.io/managed-by: kustomize
+  app.kubernetes.io/version: "1.0.0"
+
+# Image tags (override in overlays)
+images:
+  - name: pole-agenda-api
+    newTag: latest
+  - name: pole-agenda-worker
+    newTag: latest
+  - name: pole-agenda-migrate
+    newTag: latest

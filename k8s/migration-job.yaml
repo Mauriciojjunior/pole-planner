@@ -1,0 +1,61 @@
+# Standalone Migration Job (alternative to InitContainer)
+# Use this for:
+# - One-time migrations outside deployment
+# - CI/CD pipeline migrations
+# - Manual migration runs
+#
+# Usage: kubectl apply -f migration-job.yaml
+# Check status: kubectl get jobs -n pole-agenda
+# View logs: kubectl logs job/pole-agenda-migrate -n pole-agenda
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pole-agenda-migrate
+  namespace: pole-agenda
+  labels:
+    app.kubernetes.io/name: pole-agenda
+    app.kubernetes.io/component: migrate
+  annotations:
+    # Helm hook annotations (if using Helm)
+    # helm.sh/hook: pre-install,pre-upgrade
+    # helm.sh/hook-weight: "-1"
+    # helm.sh/hook-delete-policy: before-hook-creation
+spec:
+  backoffLimit: 3
+  activeDeadlineSeconds: 300  # 5 minute timeout
+  ttlSecondsAfterFinished: 3600  # Cleanup after 1 hour
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: pole-agenda
+        app.kubernetes.io/component: migrate
+    spec:
+      restartPolicy: OnFailure
+      
+      containers:
+        - name: flyway
+          image: pole-agenda-migrate:latest
+          imagePullPolicy: Always
+          args: ["migrate"]
+          envFrom:
+            - configMapRef:
+                name: pole-agenda-config
+            - secretRef:
+                name: pole-agenda-secrets
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+
+      securityContext:
+        fsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
