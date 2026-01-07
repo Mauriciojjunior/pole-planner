@@ -1,1 +1,7 @@
 project_id = "zvvvfitrolqeyrfszfcv"
+
+[functions.auth-guard]
+verify_jwt = false
+
+[functions.approve-teacher]
+verify_jwt = false

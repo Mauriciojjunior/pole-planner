@@ -402,6 +402,41 @@ export type Database = {
         }
         Relationships: []
       }
+      password_reset_tokens: {
+        Row: {
+          created_at: string | null
+          expires_at: string
+          id: string
+          profile_id: string
+          token_hash: string
+          used_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          expires_at: string
+          id?: string
+          profile_id: string
+          token_hash: string
+          used_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          expires_at?: string
+          id?: string
+          profile_id?: string
+          token_hash?: string
+          used_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "password_reset_tokens_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       plans: {
         Row: {
           classes_per_month: number | null
@@ -459,6 +494,7 @@ export type Database = {
           email: string
           external_auth_id: string | null
           id: string
+          mfa_enabled: boolean | null
           name: string | null
           updated_at: string | null
         }
@@ -468,6 +504,7 @@ export type Database = {
           email: string
           external_auth_id?: string | null
           id?: string
+          mfa_enabled?: boolean | null
           name?: string | null
           updated_at?: string | null
         }
@@ -477,6 +514,7 @@ export type Database = {
           email?: string
           external_auth_id?: string | null
           id?: string
+          mfa_enabled?: boolean | null
           name?: string | null
           updated_at?: string | null
         }
@@ -674,6 +712,7 @@ export type Database = {
       }
       teachers: {
         Row: {
+          approval_status: string | null
           avatar_url: string | null
           bio: string | null
           created_at: string | null
@@ -688,6 +727,7 @@ export type Database = {
           updated_at: string | null
         }
         Insert: {
+          approval_status?: string | null
           avatar_url?: string | null
           bio?: string | null
           created_at?: string | null
@@ -702,6 +742,7 @@ export type Database = {
           updated_at?: string | null
         }
         Update: {
+          approval_status?: string | null
           avatar_url?: string | null
           bio?: string | null
           created_at?: string | null
@@ -771,6 +812,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      is_platform_admin: { Args: { _profile_id: string }; Returns: boolean }
     }
     Enums: {
       app_role: "admin" | "teacher" | "student"
