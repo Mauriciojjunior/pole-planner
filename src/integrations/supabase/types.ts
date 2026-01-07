@@ -354,6 +354,54 @@ export type Database = {
           },
         ]
       }
+      notifications: {
+        Row: {
+          body: string | null
+          channel: string | null
+          created_at: string | null
+          data: Json | null
+          id: string
+          is_read: boolean | null
+          profile_id: string
+          read_at: string | null
+          sent_at: string | null
+          tenant_id: string
+          title: string
+          type: string
+          updated_at: string | null
+        }
+        Insert: {
+          body?: string | null
+          channel?: string | null
+          created_at?: string | null
+          data?: Json | null
+          id?: string
+          is_read?: boolean | null
+          profile_id: string
+          read_at?: string | null
+          sent_at?: string | null
+          tenant_id: string
+          title: string
+          type: string
+          updated_at?: string | null
+        }
+        Update: {
+          body?: string | null
+          channel?: string | null
+          created_at?: string | null
+          data?: Json | null
+          id?: string
+          is_read?: boolean | null
+          profile_id?: string
+          read_at?: string | null
+          sent_at?: string | null
+          tenant_id?: string
+          title?: string
+          type?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       plans: {
         Row: {
           classes_per_month: number | null
