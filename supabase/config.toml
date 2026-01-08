@@ -5,3 +5,15 @@ verify_jwt = false
 
 [functions.approve-teacher]
 verify_jwt = false
+
+[functions.teacher-onboarding]
+verify_jwt = false
+
+[functions.teacher-profile]
+verify_jwt = false
+
+[functions.teacher-documents]
+verify_jwt = false
+
+[functions.public-profile]
+verify_jwt = false
