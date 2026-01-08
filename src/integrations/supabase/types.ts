@@ -710,49 +710,139 @@ export type Database = {
           },
         ]
       }
+      teacher_documents: {
+        Row: {
+          created_at: string | null
+          file_name: string
+          file_path: string
+          file_size: number | null
+          id: string
+          mime_type: string | null
+          notes: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: string | null
+          tenant_id: string
+          type: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          file_name: string
+          file_path: string
+          file_size?: number | null
+          id?: string
+          mime_type?: string | null
+          notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string | null
+          tenant_id: string
+          type: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          file_name?: string
+          file_path?: string
+          file_size?: number | null
+          id?: string
+          mime_type?: string | null
+          notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string | null
+          tenant_id?: string
+          type?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "teacher_documents_reviewed_by_fkey"
+            columns: ["reviewed_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "teacher_documents_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "teachers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       teachers: {
         Row: {
+          address_encrypted: string | null
           approval_status: string | null
           avatar_url: string | null
           bio: string | null
           created_at: string | null
+          currency: string | null
+          document_verified: boolean | null
           email: string
           id: string
           is_active: boolean | null
+          is_phone_public: boolean | null
+          is_price_public: boolean | null
           name: string
           phone: string | null
+          phone_encrypted: string | null
+          portfolio_url: string | null
+          price_cents: number | null
           settings: Json | null
           slug: string
+          specialties: string[] | null
           timezone: string | null
           updated_at: string | null
         }
         Insert: {
+          address_encrypted?: string | null
           approval_status?: string | null
           avatar_url?: string | null
           bio?: string | null
           created_at?: string | null
+          currency?: string | null
+          document_verified?: boolean | null
           email: string
           id?: string
           is_active?: boolean | null
+          is_phone_public?: boolean | null
+          is_price_public?: boolean | null
           name: string
           phone?: string | null
+          phone_encrypted?: string | null
+          portfolio_url?: string | null
+          price_cents?: number | null
           settings?: Json | null
           slug: string
+          specialties?: string[] | null
           timezone?: string | null
           updated_at?: string | null
         }
         Update: {
+          address_encrypted?: string | null
           approval_status?: string | null
           avatar_url?: string | null
           bio?: string | null
           created_at?: string | null
+          currency?: string | null
+          document_verified?: boolean | null
           email?: string
           id?: string
           is_active?: boolean | null
+          is_phone_public?: boolean | null
+          is_price_public?: boolean | null
           name?: string
           phone?: string | null
+          phone_encrypted?: string | null
+          portfolio_url?: string | null
+          price_cents?: number | null
           settings?: Json | null
           slug?: string
+          specialties?: string[] | null
           timezone?: string | null
           updated_at?: string | null
         }
@@ -804,6 +894,14 @@ export type Database = {
     Functions: {
       get_current_profile_id: { Args: never; Returns: string }
       get_current_tenant_id: { Args: never; Returns: string }
+      get_public_teacher_profile: {
+        Args: { teacher_slug: string }
+        Returns: Json
+      }
+      get_teacher_profile_for_student: {
+        Args: { student_profile_id: string; teacher_id: string }
+        Returns: Json
+      }
       has_role: {
         Args: {
           _profile_id: string

@@ -72,26 +72,36 @@ Deno.serve(async (req) => {
       );
     }
 
-    // Parse request
+    // Parse request - now supports block/ban actions
     const { teacherId, action } = await req.json() as {
       teacherId: string;
-      action: 'approve' | 'reject';
+      action: 'approve' | 'reject' | 'block' | 'unblock' | 'ban';
     };
 
-    if (!teacherId || !['approve', 'reject'].includes(action)) {
+    const validActions = ['approve', 'reject', 'block', 'unblock', 'ban'];
+    if (!teacherId || !validActions.includes(action)) {
       return new Response(
-        JSON.stringify({ error: 'Invalid request: teacherId and action (approve/reject) required' }),
+        JSON.stringify({ error: `Invalid request: teacherId and action (${validActions.join('/')}) required` }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
-    // Update teacher approval status
-    const newStatus = action === 'approve' ? 'approved' : 'rejected';
+    // Map action to status
+    const statusMap: Record<string, string> = {
+      approve: 'approved',
+      reject: 'rejected',
+      block: 'blocked',
+      unblock: 'approved',
+      ban: 'banned',
+    };
+    const newStatus = statusMap[action];
+    // Update teacher approval status and active flag
+    const isActiveNow = ['approved'].includes(newStatus);
     const { error: updateError } = await serviceClient
       .from('teachers')
       .update({ 
         approval_status: newStatus,
-        is_active: action === 'approve',
+        is_active: isActiveNow,
       })
       .eq('id', teacherId);
 
