@@ -20,3 +20,6 @@ verify_jwt = false
 
 [functions.agenda]
 verify_jwt = false
+
+[functions.booking]
+verify_jwt = false

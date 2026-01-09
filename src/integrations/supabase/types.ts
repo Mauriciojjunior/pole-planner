@@ -905,6 +905,29 @@ export type Database = {
         Args: { p_ends_at: string; p_starts_at: string; p_tenant_id: string }
         Returns: Json
       }
+      cancel_booking_by_student: {
+        Args: { p_booking_id: string; p_reason?: string; p_student_id: string }
+        Returns: Json
+      }
+      create_booking_with_lock: {
+        Args: {
+          p_auto_approve?: boolean
+          p_class_id: string
+          p_notes?: string
+          p_student_id: string
+          p_tenant_id: string
+        }
+        Returns: Json
+      }
+      create_bulk_bookings: {
+        Args: {
+          p_class_ids: string[]
+          p_notes?: string
+          p_student_id: string
+          p_tenant_id: string
+        }
+        Returns: Json
+      }
       detect_schedule_conflicts: {
         Args: {
           p_ends_at: string
@@ -970,6 +993,16 @@ export type Database = {
       time_ranges_overlap: {
         Args: { end1: string; end2: string; start1: string; start2: string }
         Returns: boolean
+      }
+      update_booking_status: {
+        Args: {
+          p_actor_id: string
+          p_booking_id: string
+          p_new_status: Database["public"]["Enums"]["booking_status"]
+          p_reason?: string
+          p_tenant_id: string
+        }
+        Returns: Json
       }
     }
     Enums: {
