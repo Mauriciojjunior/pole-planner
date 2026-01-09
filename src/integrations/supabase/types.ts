@@ -234,10 +234,13 @@ export type Database = {
           class_type_id: string
           created_at: string | null
           ends_at: string
+          event_type: string | null
           id: string
           is_cancelled: boolean | null
+          is_recurring: boolean | null
           max_students: number
           notes: string | null
+          recurrence_rule: string | null
           schedule_id: string | null
           starts_at: string
           tenant_id: string
@@ -248,10 +251,13 @@ export type Database = {
           class_type_id: string
           created_at?: string | null
           ends_at: string
+          event_type?: string | null
           id?: string
           is_cancelled?: boolean | null
+          is_recurring?: boolean | null
           max_students: number
           notes?: string | null
+          recurrence_rule?: string | null
           schedule_id?: string | null
           starts_at: string
           tenant_id: string
@@ -262,10 +268,13 @@ export type Database = {
           class_type_id?: string
           created_at?: string | null
           ends_at?: string
+          event_type?: string | null
           id?: string
           is_cancelled?: boolean | null
+          is_recurring?: boolean | null
           max_students?: number
           notes?: string | null
+          recurrence_rule?: string | null
           schedule_id?: string | null
           starts_at?: string
           tenant_id?: string
@@ -892,6 +901,53 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      can_create_block: {
+        Args: { p_ends_at: string; p_starts_at: string; p_tenant_id: string }
+        Returns: Json
+      }
+      detect_schedule_conflicts: {
+        Args: {
+          p_ends_at: string
+          p_exclude_block_id?: string
+          p_exclude_class_id?: string
+          p_starts_at: string
+          p_tenant_id: string
+        }
+        Returns: {
+          conflict_details: Json
+          conflict_ends_at: string
+          conflict_id: string
+          conflict_starts_at: string
+          conflict_type: string
+        }[]
+      }
+      expand_schedule_to_classes: {
+        Args: { p_from_date: string; p_schedule_id: string; p_to_date: string }
+        Returns: number
+      }
+      get_availability_slots: {
+        Args: {
+          p_from_date: string
+          p_tenant_id: string
+          p_timezone?: string
+          p_to_date: string
+        }
+        Returns: {
+          available_spots: number
+          class_type_id: string
+          class_type_name: string
+          current_bookings: number
+          is_available: boolean
+          max_students: number
+          slot_date: string
+          slot_end: string
+          slot_ends_at: string
+          slot_start: string
+          slot_starts_at: string
+          source_id: string
+          source_type: string
+        }[]
+      }
       get_current_profile_id: { Args: never; Returns: string }
       get_current_tenant_id: { Args: never; Returns: string }
       get_public_teacher_profile: {
@@ -911,6 +967,10 @@ export type Database = {
         Returns: boolean
       }
       is_platform_admin: { Args: { _profile_id: string }; Returns: boolean }
+      time_ranges_overlap: {
+        Args: { end1: string; end2: string; start1: string; start2: string }
+        Returns: boolean
+      }
     }
     Enums: {
       app_role: "admin" | "teacher" | "student"

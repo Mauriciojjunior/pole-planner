@@ -17,3 +17,6 @@ verify_jwt = false
 
 [functions.public-profile]
 verify_jwt = false
+
+[functions.agenda]
+verify_jwt = false
