@@ -453,11 +453,17 @@ export type Database = {
           currency: string | null
           description: string | null
           duration_days: number
+          features: Json | null
           id: string
           is_active: boolean | null
           name: string
+          plan_type: Database["public"]["Enums"]["plan_type"] | null
           price_cents: number
+          sort_order: number | null
+          stripe_price_id: string | null
+          stripe_product_id: string | null
           tenant_id: string
+          trial_days: number | null
           updated_at: string | null
         }
         Insert: {
@@ -466,11 +472,17 @@ export type Database = {
           currency?: string | null
           description?: string | null
           duration_days?: number
+          features?: Json | null
           id?: string
           is_active?: boolean | null
           name: string
+          plan_type?: Database["public"]["Enums"]["plan_type"] | null
           price_cents: number
+          sort_order?: number | null
+          stripe_price_id?: string | null
+          stripe_product_id?: string | null
           tenant_id: string
+          trial_days?: number | null
           updated_at?: string | null
         }
         Update: {
@@ -479,11 +491,17 @@ export type Database = {
           currency?: string | null
           description?: string | null
           duration_days?: number
+          features?: Json | null
           id?: string
           is_active?: boolean | null
           name?: string
+          plan_type?: Database["public"]["Enums"]["plan_type"] | null
           price_cents?: number
+          sort_order?: number | null
+          stripe_price_id?: string | null
+          stripe_product_id?: string | null
           tenant_id?: string
+          trial_days?: number | null
           updated_at?: string | null
         }
         Relationships: [
@@ -655,44 +673,68 @@ export type Database = {
       subscriptions: {
         Row: {
           auto_renew: boolean | null
+          cancellation_reason: string | null
           cancelled_at: string | null
           classes_remaining: number | null
           created_at: string | null
           ends_at: string
           id: string
+          is_trial: boolean | null
+          metadata: Json | null
+          next_billing_date: string | null
+          payment_method: string | null
           plan_id: string
           starts_at: string
           status: Database["public"]["Enums"]["subscription_status"] | null
+          stripe_customer_id: string | null
+          stripe_subscription_id: string | null
           student_id: string
           tenant_id: string
+          trial_ends_at: string | null
           updated_at: string | null
         }
         Insert: {
           auto_renew?: boolean | null
+          cancellation_reason?: string | null
           cancelled_at?: string | null
           classes_remaining?: number | null
           created_at?: string | null
           ends_at: string
           id?: string
+          is_trial?: boolean | null
+          metadata?: Json | null
+          next_billing_date?: string | null
+          payment_method?: string | null
           plan_id: string
           starts_at: string
           status?: Database["public"]["Enums"]["subscription_status"] | null
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
           student_id: string
           tenant_id: string
+          trial_ends_at?: string | null
           updated_at?: string | null
         }
         Update: {
           auto_renew?: boolean | null
+          cancellation_reason?: string | null
           cancelled_at?: string | null
           classes_remaining?: number | null
           created_at?: string | null
           ends_at?: string
           id?: string
+          is_trial?: boolean | null
+          metadata?: Json | null
+          next_billing_date?: string | null
+          payment_method?: string | null
           plan_id?: string
           starts_at?: string
           status?: Database["public"]["Enums"]["subscription_status"] | null
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
           student_id?: string
           tenant_id?: string
+          trial_ends_at?: string | null
           updated_at?: string | null
         }
         Relationships: [
@@ -801,11 +843,13 @@ export type Database = {
           phone_encrypted: string | null
           portfolio_url: string | null
           price_cents: number | null
+          sales_message_template: string | null
           settings: Json | null
           slug: string
           specialties: string[] | null
           timezone: string | null
           updated_at: string | null
+          whatsapp_number: string | null
         }
         Insert: {
           address_encrypted?: string | null
@@ -825,11 +869,13 @@ export type Database = {
           phone_encrypted?: string | null
           portfolio_url?: string | null
           price_cents?: number | null
+          sales_message_template?: string | null
           settings?: Json | null
           slug: string
           specialties?: string[] | null
           timezone?: string | null
           updated_at?: string | null
+          whatsapp_number?: string | null
         }
         Update: {
           address_encrypted?: string | null
@@ -849,11 +895,13 @@ export type Database = {
           phone_encrypted?: string | null
           portfolio_url?: string | null
           price_cents?: number | null
+          sales_message_template?: string | null
           settings?: Json | null
           slug?: string
           specialties?: string[] | null
           timezone?: string | null
           updated_at?: string | null
+          whatsapp_number?: string | null
         }
         Relationships: []
       }
@@ -909,6 +957,15 @@ export type Database = {
         Args: { p_booking_id: string; p_reason?: string; p_student_id: string }
         Returns: Json
       }
+      cancel_subscription: {
+        Args: {
+          p_immediate?: boolean
+          p_reason?: string
+          p_subscription_id: string
+          p_tenant_id: string
+        }
+        Returns: Json
+      }
       create_booking_with_lock: {
         Args: {
           p_auto_approve?: boolean
@@ -923,6 +980,15 @@ export type Database = {
         Args: {
           p_class_ids: string[]
           p_notes?: string
+          p_student_id: string
+          p_tenant_id: string
+        }
+        Returns: Json
+      }
+      create_subscription: {
+        Args: {
+          p_plan_id: string
+          p_start_trial?: boolean
           p_student_id: string
           p_tenant_id: string
         }
@@ -977,9 +1043,25 @@ export type Database = {
         Args: { teacher_slug: string }
         Returns: Json
       }
+      get_student_subscription: {
+        Args: { p_student_id: string; p_tenant_id: string }
+        Returns: Json
+      }
       get_teacher_profile_for_student: {
         Args: { student_profile_id: string; teacher_id: string }
         Returns: Json
+      }
+      get_whatsapp_sales_link: {
+        Args: {
+          p_plan_id: string
+          p_student_name?: string
+          p_tenant_id: string
+        }
+        Returns: Json
+      }
+      has_active_subscription: {
+        Args: { p_student_id: string; p_tenant_id: string }
+        Returns: boolean
       }
       has_role: {
         Args: {
@@ -990,6 +1072,10 @@ export type Database = {
         Returns: boolean
       }
       is_platform_admin: { Args: { _profile_id: string }; Returns: boolean }
+      renew_subscription: {
+        Args: { p_subscription_id: string; p_tenant_id: string }
+        Returns: Json
+      }
       time_ranges_overlap: {
         Args: { end1: string; end2: string; start1: string; start2: string }
         Returns: boolean
@@ -1002,6 +1088,11 @@ export type Database = {
           p_reason?: string
           p_tenant_id: string
         }
+        Returns: Json
+      }
+      urlencode: { Args: { "": string }; Returns: string }
+      use_subscription_class: {
+        Args: { p_subscription_id: string; p_tenant_id: string }
         Returns: Json
       }
     }
@@ -1022,6 +1113,7 @@ export type Database = {
         | "saturday"
         | "sunday"
       job_status: "pending" | "processing" | "completed" | "failed" | "dead"
+      plan_type: "monthly" | "quarterly" | "semiannual" | "custom"
       subscription_status: "active" | "paused" | "cancelled" | "expired"
     }
     CompositeTypes: {
@@ -1168,6 +1260,7 @@ export const Constants = {
         "sunday",
       ],
       job_status: ["pending", "processing", "completed", "failed", "dead"],
+      plan_type: ["monthly", "quarterly", "semiannual", "custom"],
       subscription_status: ["active", "paused", "cancelled", "expired"],
     },
   },
