@@ -1014,6 +1014,49 @@ export type Database = {
         Args: { p_from_date: string; p_schedule_id: string; p_to_date: string }
         Returns: number
       }
+      get_admin_conversion_funnel: {
+        Args: { p_end_date: string; p_start_date: string }
+        Returns: {
+          count: number
+          percentage: number
+          stage: string
+        }[]
+      }
+      get_admin_platform_stats: {
+        Args: { p_end_date: string; p_start_date: string }
+        Returns: {
+          active_students: number
+          active_subscriptions: number
+          active_teachers: number
+          blocked_teachers: number
+          pending_teachers: number
+          total_bookings: number
+          total_classes: number
+          total_students: number
+          total_subscriptions: number
+          total_teachers: number
+          trial_subscriptions: number
+        }[]
+      }
+      get_admin_subscription_stats: {
+        Args: never
+        Returns: {
+          count: number
+          percentage: number
+          status: string
+          total_revenue_cents: number
+        }[]
+      }
+      get_admin_usage_over_time: {
+        Args: { p_end_date: string; p_group_by?: string; p_start_date: string }
+        Returns: {
+          bookings_made: number
+          classes_created: number
+          new_students: number
+          new_teachers: number
+          period: string
+        }[]
+      }
       get_availability_slots: {
         Args: {
           p_from_date: string
@@ -1047,9 +1090,75 @@ export type Database = {
         Args: { p_student_id: string; p_tenant_id: string }
         Returns: Json
       }
+      get_teacher_classes_stats: {
+        Args: {
+          p_end_date: string
+          p_group_by?: string
+          p_start_date: string
+          p_tenant_id: string
+        }
+        Returns: {
+          attendance_count: number
+          cancelled_bookings: number
+          confirmed_bookings: number
+          max_capacity: number
+          occupancy_rate: number
+          period: string
+          total_bookings: number
+          total_classes: number
+        }[]
+      }
+      get_teacher_dashboard_summary: {
+        Args: { p_end_date: string; p_start_date: string; p_tenant_id: string }
+        Returns: {
+          active_students: number
+          attendance_rate: number
+          cancellation_rate: number
+          cancelled_bookings: number
+          confirmed_bookings: number
+          occupancy_rate: number
+          pending_bookings: number
+          total_attended: number
+          total_bookings: number
+          total_capacity: number
+          total_classes: number
+          total_students: number
+        }[]
+      }
+      get_teacher_export_data: {
+        Args: {
+          p_end_date: string
+          p_export_type?: string
+          p_start_date: string
+          p_tenant_id: string
+        }
+        Returns: {
+          data: Json
+        }[]
+      }
       get_teacher_profile_for_student: {
         Args: { student_profile_id: string; teacher_id: string }
         Returns: Json
+      }
+      get_teacher_student_stats: {
+        Args: {
+          p_end_date?: string
+          p_limit?: number
+          p_start_date?: string
+          p_tenant_id: string
+        }
+        Returns: {
+          attendance_rate: number
+          attended_classes: number
+          cancelled_bookings: number
+          confirmed_bookings: number
+          last_class_date: string
+          missed_classes: number
+          student_email: string
+          student_id: string
+          student_name: string
+          total_bookings: number
+        }[]
       }
       get_whatsapp_sales_link: {
         Args: {
