@@ -1,5 +1,5 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.1";
+import { createClient, SupabaseClient } from "https://esm.sh/@supabase/supabase-js@2.49.1";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -27,7 +27,8 @@ async function generateSignature(payload: string, secret: string): Promise<strin
   return `sha256=${hashHex}`;
 }
 
-async function deliverWebhook(supabaseClient: ReturnType<typeof createClient>, job: WebhookDeliveryJob): Promise<{ success: boolean; error?: string }> {
+// deno-lint-ignore no-explicit-any
+async function deliverWebhook(supabaseClient: SupabaseClient<any>, job: WebhookDeliveryJob): Promise<{ success: boolean; error?: string }> {
   console.log(`Delivering webhook to ${job.url}`);
 
   try {

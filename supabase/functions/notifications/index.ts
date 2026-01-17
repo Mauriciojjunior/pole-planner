@@ -1,5 +1,5 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.1";
+import { createClient, SupabaseClient } from "https://esm.sh/@supabase/supabase-js@2.49.1";
 import { Resend } from "https://esm.sh/resend@2.0.0";
 
 const corsHeaders = {
@@ -65,7 +65,8 @@ async function sendEmail(to: string, toName: string, subject: string, body: stri
   }
 }
 
-async function processNotificationJob(supabaseClient: ReturnType<typeof createClient>, job: JobPayload): Promise<{ success: boolean; error?: string }> {
+// deno-lint-ignore no-explicit-any
+async function processNotificationJob(supabaseClient: SupabaseClient<any>, job: JobPayload): Promise<{ success: boolean; error?: string }> {
   const { payload, tenant_id } = job;
   const eventType = payload.event_type;
 

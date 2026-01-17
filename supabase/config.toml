@@ -38,3 +38,6 @@ verify_jwt = false
 
 [functions.job-worker]
 verify_jwt = false
+
+[functions.observability]
+verify_jwt = false
