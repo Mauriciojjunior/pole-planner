@@ -304,6 +304,53 @@ export type Database = {
           },
         ]
       }
+      events: {
+        Row: {
+          actor_id: string | null
+          actor_type: string | null
+          created_at: string
+          entity_id: string
+          entity_type: string
+          event_type: Database["public"]["Enums"]["event_type"]
+          id: string
+          metadata: Json | null
+          payload: Json
+          tenant_id: string | null
+        }
+        Insert: {
+          actor_id?: string | null
+          actor_type?: string | null
+          created_at?: string
+          entity_id: string
+          entity_type: string
+          event_type: Database["public"]["Enums"]["event_type"]
+          id?: string
+          metadata?: Json | null
+          payload?: Json
+          tenant_id?: string | null
+        }
+        Update: {
+          actor_id?: string | null
+          actor_type?: string | null
+          created_at?: string
+          entity_id?: string
+          entity_type?: string
+          event_type?: Database["public"]["Enums"]["event_type"]
+          id?: string
+          metadata?: Json | null
+          payload?: Json
+          tenant_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "events_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "teachers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       jobs: {
         Row: {
           attempts: number | null
@@ -356,6 +403,107 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "jobs_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "teachers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      notification_preferences: {
+        Row: {
+          channel: Database["public"]["Enums"]["notification_channel"]
+          created_at: string
+          event_types: string[]
+          id: string
+          is_enabled: boolean | null
+          profile_id: string
+          tenant_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          channel: Database["public"]["Enums"]["notification_channel"]
+          created_at?: string
+          event_types?: string[]
+          id?: string
+          is_enabled?: boolean | null
+          profile_id: string
+          tenant_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          channel?: Database["public"]["Enums"]["notification_channel"]
+          created_at?: string
+          event_types?: string[]
+          id?: string
+          is_enabled?: boolean | null
+          profile_id?: string
+          tenant_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notification_preferences_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "notification_preferences_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "teachers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      notification_templates: {
+        Row: {
+          body_template: string
+          channel: Database["public"]["Enums"]["notification_channel"]
+          created_at: string
+          event_type: Database["public"]["Enums"]["event_type"]
+          id: string
+          is_active: boolean | null
+          is_system: boolean | null
+          name: string
+          subject: string | null
+          tenant_id: string | null
+          updated_at: string
+          variables: Json | null
+        }
+        Insert: {
+          body_template: string
+          channel: Database["public"]["Enums"]["notification_channel"]
+          created_at?: string
+          event_type: Database["public"]["Enums"]["event_type"]
+          id?: string
+          is_active?: boolean | null
+          is_system?: boolean | null
+          name: string
+          subject?: string | null
+          tenant_id?: string | null
+          updated_at?: string
+          variables?: Json | null
+        }
+        Update: {
+          body_template?: string
+          channel?: Database["public"]["Enums"]["notification_channel"]
+          created_at?: string
+          event_type?: Database["public"]["Enums"]["event_type"]
+          id?: string
+          is_active?: boolean | null
+          is_system?: boolean | null
+          name?: string
+          subject?: string | null
+          tenant_id?: string | null
+          updated_at?: string
+          variables?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notification_templates_tenant_id_fkey"
             columns: ["tenant_id"]
             isOneToOne: false
             referencedRelation: "teachers"
@@ -944,6 +1092,113 @@ export type Database = {
           },
         ]
       }
+      webhook_deliveries: {
+        Row: {
+          attempts: number
+          created_at: string
+          delivered_at: string | null
+          error: string | null
+          event_id: string
+          id: string
+          max_attempts: number
+          next_retry_at: string | null
+          response_body: string | null
+          response_status: number | null
+          status: string
+          webhook_subscription_id: string
+        }
+        Insert: {
+          attempts?: number
+          created_at?: string
+          delivered_at?: string | null
+          error?: string | null
+          event_id: string
+          id?: string
+          max_attempts?: number
+          next_retry_at?: string | null
+          response_body?: string | null
+          response_status?: number | null
+          status?: string
+          webhook_subscription_id: string
+        }
+        Update: {
+          attempts?: number
+          created_at?: string
+          delivered_at?: string | null
+          error?: string | null
+          event_id?: string
+          id?: string
+          max_attempts?: number
+          next_retry_at?: string | null
+          response_body?: string | null
+          response_status?: number | null
+          status?: string
+          webhook_subscription_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "webhook_deliveries_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "webhook_deliveries_webhook_subscription_id_fkey"
+            columns: ["webhook_subscription_id"]
+            isOneToOne: false
+            referencedRelation: "webhook_subscriptions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      webhook_subscriptions: {
+        Row: {
+          created_at: string
+          events: string[]
+          headers: Json | null
+          id: string
+          is_active: boolean | null
+          name: string
+          secret: string | null
+          tenant_id: string
+          updated_at: string
+          url: string
+        }
+        Insert: {
+          created_at?: string
+          events?: string[]
+          headers?: Json | null
+          id?: string
+          is_active?: boolean | null
+          name: string
+          secret?: string | null
+          tenant_id: string
+          updated_at?: string
+          url: string
+        }
+        Update: {
+          created_at?: string
+          events?: string[]
+          headers?: Json | null
+          id?: string
+          is_active?: boolean | null
+          name?: string
+          secret?: string | null
+          tenant_id?: string
+          updated_at?: string
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "webhook_subscriptions_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "teachers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -1009,6 +1264,18 @@ export type Database = {
           conflict_starts_at: string
           conflict_type: string
         }[]
+      }
+      emit_event: {
+        Args: {
+          p_actor_id?: string
+          p_actor_type?: string
+          p_entity_id: string
+          p_entity_type: string
+          p_event_type: Database["public"]["Enums"]["event_type"]
+          p_payload?: Json
+          p_tenant_id: string
+        }
+        Returns: string
       }
       expand_schedule_to_classes: {
         Args: { p_from_date: string; p_schedule_id: string; p_to_date: string }
@@ -1185,6 +1452,7 @@ export type Database = {
         Args: { p_subscription_id: string; p_tenant_id: string }
         Returns: Json
       }
+      schedule_reminders: { Args: never; Returns: number }
       time_ranges_overlap: {
         Args: { end1: string; end2: string; start1: string; start2: string }
         Returns: boolean
@@ -1221,7 +1489,25 @@ export type Database = {
         | "friday"
         | "saturday"
         | "sunday"
+      event_type:
+        | "booking.created"
+        | "booking.approved"
+        | "booking.rejected"
+        | "booking.cancelled"
+        | "booking.reminder"
+        | "class.reminder"
+        | "class.cancelled"
+        | "subscription.created"
+        | "subscription.expiring"
+        | "subscription.expired"
+        | "subscription.renewed"
+        | "teacher.approved"
+        | "teacher.rejected"
+        | "teacher.blocked"
+        | "teacher.unblocked"
+        | "admin.action"
       job_status: "pending" | "processing" | "completed" | "failed" | "dead"
+      notification_channel: "email" | "whatsapp" | "in_app" | "webhook"
       plan_type: "monthly" | "quarterly" | "semiannual" | "custom"
       subscription_status: "active" | "paused" | "cancelled" | "expired"
     }
@@ -1368,7 +1654,26 @@ export const Constants = {
         "saturday",
         "sunday",
       ],
+      event_type: [
+        "booking.created",
+        "booking.approved",
+        "booking.rejected",
+        "booking.cancelled",
+        "booking.reminder",
+        "class.reminder",
+        "class.cancelled",
+        "subscription.created",
+        "subscription.expiring",
+        "subscription.expired",
+        "subscription.renewed",
+        "teacher.approved",
+        "teacher.rejected",
+        "teacher.blocked",
+        "teacher.unblocked",
+        "admin.action",
+      ],
       job_status: ["pending", "processing", "completed", "failed", "dead"],
+      notification_channel: ["email", "whatsapp", "in_app", "webhook"],
       plan_type: ["monthly", "quarterly", "semiannual", "custom"],
       subscription_status: ["active", "paused", "cancelled", "expired"],
     },
