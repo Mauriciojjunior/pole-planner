@@ -1,5 +1,5 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.1";
+import { createClient, SupabaseClient } from "https://esm.sh/@supabase/supabase-js@2.49.1";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -56,7 +56,8 @@ async function processJob(job: Job): Promise<{ success: boolean; error?: string 
   }
 }
 
-async function processJobs(supabaseClient: ReturnType<typeof createClient>, batchSize: number = 10) {
+// deno-lint-ignore no-explicit-any
+async function processJobs(supabaseClient: SupabaseClient<any>, batchSize: number = 10) {
   const results = { processed: 0, failed: 0 };
 
   const { data: jobs } = await supabaseClient
@@ -71,7 +72,15 @@ async function processJobs(supabaseClient: ReturnType<typeof createClient>, batc
   if (!jobs?.length) return results;
 
   for (const jobData of jobs) {
-    const job = jobData as Job;
+    const job: Job = {
+      id: String(jobData.id),
+      tenant_id: jobData.tenant_id ? String(jobData.tenant_id) : null,
+      type: String(jobData.type),
+      payload: (jobData.payload as Record<string, unknown>) || {},
+      status: String(jobData.status),
+      attempts: Number(jobData.attempts) || 0,
+      max_attempts: Number(jobData.max_attempts) || 3,
+    };
     
     await supabaseClient.from('jobs').update({ status: 'processing', started_at: new Date().toISOString(), attempts: job.attempts + 1 }).eq('id', job.id);
 

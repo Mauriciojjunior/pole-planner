@@ -14,6 +14,50 @@ export type Database = {
   }
   public: {
     Tables: {
+      account_deletion_requests: {
+        Row: {
+          cancelled_at: string | null
+          completed_at: string | null
+          error: string | null
+          id: string
+          profile_id: string
+          reason: string | null
+          requested_at: string
+          scheduled_for: string | null
+          status: string
+        }
+        Insert: {
+          cancelled_at?: string | null
+          completed_at?: string | null
+          error?: string | null
+          id?: string
+          profile_id: string
+          reason?: string | null
+          requested_at?: string
+          scheduled_for?: string | null
+          status?: string
+        }
+        Update: {
+          cancelled_at?: string | null
+          completed_at?: string | null
+          error?: string | null
+          id?: string
+          profile_id?: string
+          reason?: string | null
+          requested_at?: string
+          scheduled_for?: string | null
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "account_deletion_requests_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       audit_logs: {
         Row: {
           action: string
@@ -304,6 +348,89 @@ export type Database = {
           },
         ]
       }
+      data_export_requests: {
+        Row: {
+          completed_at: string | null
+          error: string | null
+          expires_at: string | null
+          file_path: string | null
+          format: string
+          id: string
+          metadata: Json | null
+          profile_id: string
+          requested_at: string
+          status: string
+        }
+        Insert: {
+          completed_at?: string | null
+          error?: string | null
+          expires_at?: string | null
+          file_path?: string | null
+          format?: string
+          id?: string
+          metadata?: Json | null
+          profile_id: string
+          requested_at?: string
+          status?: string
+        }
+        Update: {
+          completed_at?: string | null
+          error?: string | null
+          expires_at?: string | null
+          file_path?: string | null
+          format?: string
+          id?: string
+          metadata?: Json | null
+          profile_id?: string
+          requested_at?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "data_export_requests_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      data_retention_policies: {
+        Row: {
+          created_at: string
+          deletion_strategy: string
+          id: string
+          is_active: boolean | null
+          last_run_at: string | null
+          next_run_at: string | null
+          retention_days: number
+          table_name: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          deletion_strategy?: string
+          id?: string
+          is_active?: boolean | null
+          last_run_at?: string | null
+          next_run_at?: string | null
+          retention_days: number
+          table_name: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          deletion_strategy?: string
+          id?: string
+          is_active?: boolean | null
+          last_run_at?: string | null
+          next_run_at?: string | null
+          retention_days?: number
+          table_name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       events: {
         Row: {
           actor_id: string | null
@@ -403,6 +530,41 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "jobs_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "teachers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      metrics: {
+        Row: {
+          id: string
+          labels: Json | null
+          name: string
+          recorded_at: string
+          tenant_id: string | null
+          value: number
+        }
+        Insert: {
+          id?: string
+          labels?: Json | null
+          name: string
+          recorded_at?: string
+          tenant_id?: string | null
+          value: number
+        }
+        Update: {
+          id?: string
+          labels?: Json | null
+          name?: string
+          recorded_at?: string
+          tenant_id?: string | null
+          value?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "metrics_tenant_id_fkey"
             columns: ["tenant_id"]
             isOneToOne: false
             referencedRelation: "teachers"
@@ -1204,9 +1366,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      apply_data_retention: { Args: never; Returns: number }
       can_create_block: {
         Args: { p_ends_at: string; p_starts_at: string; p_tenant_id: string }
         Returns: Json
+      }
+      cancel_account_deletion: {
+        Args: { p_profile_id: string; p_request_id: string }
+        Returns: boolean
       }
       cancel_booking_by_student: {
         Args: { p_booking_id: string; p_reason?: string; p_student_id: string }
@@ -1281,6 +1448,7 @@ export type Database = {
         Args: { p_from_date: string; p_schedule_id: string; p_to_date: string }
         Returns: number
       }
+      export_user_data: { Args: { p_profile_id: string }; Returns: Json }
       get_admin_conversion_funnel: {
         Args: { p_end_date: string; p_start_date: string }
         Returns: {
@@ -1451,6 +1619,10 @@ export type Database = {
       renew_subscription: {
         Args: { p_subscription_id: string; p_tenant_id: string }
         Returns: Json
+      }
+      request_account_deletion: {
+        Args: { p_profile_id: string; p_reason?: string }
+        Returns: string
       }
       schedule_reminders: { Args: never; Returns: number }
       time_ranges_overlap: {
