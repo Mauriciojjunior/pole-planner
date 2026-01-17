@@ -29,3 +29,12 @@ verify_jwt = false
 
 [functions.dashboard]
 verify_jwt = false
+
+[functions.notifications]
+verify_jwt = false
+
+[functions.webhooks]
+verify_jwt = false
+
+[functions.job-worker]
+verify_jwt = false
