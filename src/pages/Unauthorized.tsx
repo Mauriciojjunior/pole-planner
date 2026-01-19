@@ -10,15 +10,15 @@ export default function Unauthorized() {
           <ShieldX className="h-24 w-24 text-destructive" />
         </div>
         <div className="space-y-2">
-          <h1 className="text-3xl font-bold">Access Denied</h1>
+          <h1 className="text-3xl font-bold">Acesso Negado</h1>
           <p className="text-muted-foreground max-w-md">
-            You don't have permission to access this page. Please contact an administrator if you believe this is an error.
+            Você não tem permissão para acessar esta página. Entre em contato com um administrador se acredita que isso é um erro.
           </p>
         </div>
         <Button asChild>
           <Link to="/">
             <Home className="mr-2 h-4 w-4" />
-            Go to Home
+            Voltar ao Início
           </Link>
         </Button>
       </div>

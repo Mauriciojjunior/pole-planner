@@ -22,7 +22,7 @@ interface TeacherCardProps {
 
 export function TeacherCard({ teacher }: TeacherCardProps) {
   const formatPrice = (cents: number, currency: string) => {
-    return new Intl.NumberFormat('en-US', {
+    return new Intl.NumberFormat('pt-BR', {
       style: 'currency',
       currency: currency,
     }).format(cents / 100);
@@ -84,7 +84,7 @@ export function TeacherCard({ teacher }: TeacherCardProps) {
         {teacher.is_price_public && teacher.price_cents && teacher.currency && (
           <div className="mt-4 text-lg font-semibold text-primary">
             {formatPrice(teacher.price_cents, teacher.currency)}
-            <span className="text-sm font-normal text-muted-foreground">/class</span>
+            <span className="text-sm font-normal text-muted-foreground">/aula</span>
           </div>
         )}
       </CardContent>
@@ -93,7 +93,7 @@ export function TeacherCard({ teacher }: TeacherCardProps) {
         <Button asChild className="w-full" variant="outline">
           <Link to={`/teachers/${teacher.slug}`}>
             <Calendar className="mr-2 h-4 w-4" />
-            View Schedule
+            Ver Agenda
           </Link>
         </Button>
       </CardFooter>

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { format, parseISO, startOfDay, addDays, isSameDay } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 import { Calendar } from '@/components/ui/calendar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -28,12 +29,12 @@ export function AvailabilityCalendar({
 }: AvailabilityCalendarProps) {
   const [selectedDate, setSelectedDate] = useState<Date>(startOfDay(new Date()));
 
-  // Get dates that have availability
+  // Obter datas que têm disponibilidade
   const datesWithSlots = new Set(
     slots.map((slot) => format(parseISO(slot.slot_start), 'yyyy-MM-dd'))
   );
 
-  // Get slots for selected date
+  // Obter horários para a data selecionada
   const selectedDateSlots = slots.filter((slot) =>
     isSameDay(parseISO(slot.slot_start), selectedDate)
   );
@@ -51,14 +52,14 @@ export function AvailabilityCalendar({
   };
 
   const formatTime = (isoString: string) => {
-    return format(parseISO(isoString), 'h:mm a');
+    return format(parseISO(isoString), 'HH:mm', { locale: ptBR });
   };
 
   return (
     <div className="grid gap-6 md:grid-cols-2">
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg">Select Date</CardTitle>
+          <CardTitle className="text-lg">Selecione a Data</CardTitle>
         </CardHeader>
         <CardContent>
           <Calendar
@@ -76,6 +77,7 @@ export function AvailabilityCalendar({
                 backgroundColor: 'hsl(var(--primary) / 0.1)',
               },
             }}
+            locale={ptBR}
             className="rounded-md border"
           />
         </CardContent>
@@ -84,7 +86,7 @@ export function AvailabilityCalendar({
       <Card>
         <CardHeader>
           <CardTitle className="text-lg">
-            Available Times for {format(selectedDate, 'MMMM d, yyyy')}
+            Horários Disponíveis para {format(selectedDate, "d 'de' MMMM 'de' yyyy", { locale: ptBR })}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -96,7 +98,7 @@ export function AvailabilityCalendar({
             </div>
           ) : selectedDateSlots.length === 0 ? (
             <p className="text-center text-muted-foreground py-8">
-              No available times for this date
+              Nenhum horário disponível para esta data
             </p>
           ) : (
             <div className="space-y-3 max-h-[400px] overflow-y-auto pr-2">
@@ -120,16 +122,16 @@ export function AvailabilityCalendar({
                     {slot.spots_available > 0 && (
                       <div className="flex items-center gap-1 text-xs text-muted-foreground">
                         <Users className="h-3 w-3" />
-                        {slot.spots_available} spots
+                        {slot.spots_available} {slot.spots_available === 1 ? 'vaga' : 'vagas'}
                       </div>
                     )}
                     {slot.is_bookable ? (
                       <Badge className="bg-green-500/10 text-green-600 hover:bg-green-500/20">
-                        Available
+                        Disponível
                       </Badge>
                     ) : (
                       <Badge variant="outline" className="text-muted-foreground">
-                        Full
+                        Lotado
                       </Badge>
                     )}
                   </div>
