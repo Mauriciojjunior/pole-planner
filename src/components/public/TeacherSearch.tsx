@@ -60,7 +60,7 @@ export function TeacherSearch({
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder="Search by name..."
+            placeholder="Buscar por nome..."
             value={searchInput}
             onChange={handleSearchChange}
             className="pl-10 pr-10"
@@ -77,10 +77,10 @@ export function TeacherSearch({
 
         <Select value={currentSpecialty} onValueChange={onSpecialtyChange}>
           <SelectTrigger className="w-full sm:w-[200px]">
-            <SelectValue placeholder="All specialties" />
+            <SelectValue placeholder="Todas as especialidades" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All specialties</SelectItem>
+            <SelectItem value="">Todas as especialidades</SelectItem>
             {specialties.map((specialty) => (
               <SelectItem key={specialty} value={specialty}>
                 {specialty}
@@ -92,7 +92,7 @@ export function TeacherSearch({
         {hasFilters && (
           <Button variant="ghost" onClick={clearFilters} className="shrink-0">
             <X className="mr-2 h-4 w-4" />
-            Clear filters
+            Limpar filtros
           </Button>
         )}
       </div>

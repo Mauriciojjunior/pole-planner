@@ -52,7 +52,7 @@ export default function PublicTeacherProfile() {
   };
 
   const formatPrice = (cents: number, currency: string) => {
-    return new Intl.NumberFormat('en-US', {
+    return new Intl.NumberFormat('pt-BR', {
       style: 'currency',
       currency: currency,
     }).format(cents / 100);
@@ -62,12 +62,12 @@ export default function PublicTeacherProfile() {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-foreground">Teacher Not Found</h1>
-          <p className="text-muted-foreground mt-2">This teacher profile doesn't exist or is not available.</p>
+          <h1 className="text-2xl font-bold text-foreground">Professor Não Encontrado</h1>
+          <p className="text-muted-foreground mt-2">Este perfil de professor não existe ou não está disponível.</p>
           <Button asChild className="mt-4">
             <Link to="/teachers">
               <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Teachers
+              Voltar aos Professores
             </Link>
           </Button>
         </div>
@@ -83,7 +83,7 @@ export default function PublicTeacherProfile() {
         description: teacher.bio,
         url: window.location.href,
         image: teacher.avatar_url,
-        jobTitle: 'Teacher',
+        jobTitle: 'Professor',
         knowsAbout: teacher.specialties,
       }
     : undefined;
@@ -92,8 +92,8 @@ export default function PublicTeacherProfile() {
     <>
       {teacher && (
         <SEOHead
-          title={`${teacher.name} - Book Classes`}
-          description={teacher.bio || `Book classes with ${teacher.name}. View available times and schedule your session.`}
+          title={`${teacher.name} - Agendar Aulas`}
+          description={teacher.bio || `Agende aulas com ${teacher.name}. Veja horários disponíveis e marque sua sessão.`}
           keywords={teacher.specialties || []}
           ogImage={teacher.avatar_url}
           ogType="profile"
@@ -102,7 +102,7 @@ export default function PublicTeacherProfile() {
       )}
 
       <div className="min-h-screen bg-background">
-        {/* Header */}
+        {/* Cabeçalho */}
         <header className="border-b bg-card">
           <div className="container mx-auto px-4 py-4">
             <div className="flex items-center justify-between">
@@ -110,20 +110,20 @@ export default function PublicTeacherProfile() {
                 ClassBook
               </Link>
               <Link to="/auth">
-                <Button variant="outline">Sign In</Button>
+                <Button variant="outline">Entrar</Button>
               </Link>
             </div>
           </div>
         </header>
 
         <main className="container mx-auto px-4 py-8">
-          {/* Back Button */}
+          {/* Botão Voltar */}
           <Link
             to="/teachers"
             className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-6"
           >
             <ArrowLeft className="mr-1 h-4 w-4" />
-            Back to Teachers
+            Voltar aos Professores
           </Link>
 
           {profileLoading ? (
@@ -146,7 +146,7 @@ export default function PublicTeacherProfile() {
             </div>
           ) : teacher ? (
             <div className="grid gap-8 lg:grid-cols-3">
-              {/* Profile Card */}
+              {/* Card do Perfil */}
               <div className="lg:col-span-1 space-y-6">
                 <Card>
                   <CardContent className="p-6">
@@ -187,18 +187,18 @@ export default function PublicTeacherProfile() {
                           <div className="text-2xl font-bold text-primary">
                             {formatPrice(teacher.price_cents, teacher.currency)}
                           </div>
-                          <div className="text-sm text-muted-foreground">per class</div>
+                          <div className="text-sm text-muted-foreground">por aula</div>
                         </div>
                       )}
                     </div>
                   </CardContent>
                 </Card>
 
-                {/* Contact Info (for enrolled students) */}
+                {/* Informações de Contato (para alunos matriculados) */}
                 {profileData?.access_level === 'enrolled' && (
                   <Card>
                     <CardHeader>
-                      <CardTitle className="text-base">Contact Information</CardTitle>
+                      <CardTitle className="text-base">Informações de Contato</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-3">
                       {teacher.email && (
@@ -227,18 +227,18 @@ export default function PublicTeacherProfile() {
                           className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
                         >
                           <ExternalLink className="h-4 w-4" />
-                          Portfolio
+                          Portfólio
                         </a>
                       )}
                     </CardContent>
                   </Card>
                 )}
 
-                {/* Class Types */}
+                {/* Tipos de Aula */}
                 {classTypes.length > 0 && (
                   <Card>
                     <CardHeader>
-                      <CardTitle className="text-base">Class Types</CardTitle>
+                      <CardTitle className="text-base">Tipos de Aula</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-3">
                       {classTypes.map((classType: { id: string; name: string; description: string | null; duration_minutes: number; max_students: number; color: string | null }) => (
@@ -261,7 +261,7 @@ export default function PublicTeacherProfile() {
                               <Clock className="h-3 w-3" />
                               {classType.duration_minutes} min
                             </span>
-                            <span>Max {classType.max_students} students</span>
+                            <span>Máx {classType.max_students} alunos</span>
                           </div>
                         </div>
                       ))}
@@ -270,13 +270,13 @@ export default function PublicTeacherProfile() {
                 )}
               </div>
 
-              {/* Availability */}
+              {/* Disponibilidade */}
               <div className="lg:col-span-2">
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                       <Calendar className="h-5 w-5" />
-                      Availability
+                      Disponibilidade
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -289,11 +289,11 @@ export default function PublicTeacherProfile() {
                     <div className="mt-6 text-center">
                       <Button asChild size="lg">
                         <Link to="/auth">
-                          Sign in to Book a Class
+                          Entre para Agendar uma Aula
                         </Link>
                       </Button>
                       <p className="text-sm text-muted-foreground mt-2">
-                        Create an account or sign in to book classes
+                        Crie uma conta ou entre para agendar aulas
                       </p>
                     </div>
                   </CardContent>
@@ -303,10 +303,10 @@ export default function PublicTeacherProfile() {
           ) : null}
         </main>
 
-        {/* Footer */}
+        {/* Rodapé */}
         <footer className="border-t bg-card mt-12">
           <div className="container mx-auto px-4 py-8 text-center text-sm text-muted-foreground">
-            © {new Date().getFullYear()} ClassBook. All rights reserved.
+            © {new Date().getFullYear()} ClassBook. Todos os direitos reservados.
           </div>
         </footer>
       </div>

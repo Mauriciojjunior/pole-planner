@@ -10,8 +10,8 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Loader2, Mail, Lock, User, AlertCircle } from 'lucide-react';
 import { z } from 'zod';
 
-const emailSchema = z.string().email('Invalid email address');
-const passwordSchema = z.string().min(8, 'Password must be at least 8 characters');
+const emailSchema = z.string().email('Endereço de email inválido');
+const passwordSchema = z.string().min(8, 'A senha deve ter pelo menos 8 caracteres');
 
 type AuthMode = 'login' | 'signup' | 'forgot-password';
 type SignupType = 'student' | 'teacher';
@@ -56,7 +56,7 @@ export default function Auth() {
     }
 
     if (mode === 'signup' && !name.trim()) {
-      setError('Name is required');
+      setError('Nome é obrigatório');
       return false;
     }
 
@@ -77,27 +77,24 @@ export default function Auth() {
         const { error } = await signIn(email, password);
         if (error) {
           if (error.message.includes('Invalid login credentials')) {
-            setError('Invalid email or password');
+            setError('Email ou senha inválidos');
           } else {
             setError(error.message);
           }
         }
       } else if (mode === 'signup') {
-        const { error } = await signUp(email, password, { 
-          name,
-          // Store signup type in metadata for profile creation trigger
-        });
+        const { error } = await signUp(email, password, { name });
         if (error) {
           if (error.message.includes('already registered')) {
-            setError('An account with this email already exists');
+            setError('Já existe uma conta com este email');
           } else {
             setError(error.message);
           }
         } else {
           setSuccess(
             signupType === 'teacher'
-              ? 'Account created! Please check your email to confirm. Your account is pending admin approval.'
-              : 'Account created! Please check your email to confirm your account.'
+              ? 'Conta criada! Verifique seu email para confirmar. Sua conta está pendente de aprovação do administrador.'
+              : 'Conta criada! Verifique seu email para confirmar sua conta.'
           );
         }
       } else if (mode === 'forgot-password') {
@@ -105,11 +102,11 @@ export default function Auth() {
         if (error) {
           setError(error.message);
         } else {
-          setSuccess('Password reset email sent. Check your inbox.');
+          setSuccess('Email de redefinição de senha enviado. Verifique sua caixa de entrada.');
         }
       }
     } catch (err) {
-      setError('An unexpected error occurred');
+      setError('Ocorreu um erro inesperado');
     } finally {
       setIsLoading(false);
     }
@@ -128,14 +125,14 @@ export default function Auth() {
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center">
-            {mode === 'login' && 'Welcome back'}
-            {mode === 'signup' && 'Create an account'}
-            {mode === 'forgot-password' && 'Reset password'}
+            {mode === 'login' && 'Bem-vindo de volta'}
+            {mode === 'signup' && 'Criar uma conta'}
+            {mode === 'forgot-password' && 'Redefinir senha'}
           </CardTitle>
           <CardDescription className="text-center">
-            {mode === 'login' && 'Enter your credentials to access your account'}
-            {mode === 'signup' && 'Enter your details to get started'}
-            {mode === 'forgot-password' && 'Enter your email to receive a reset link'}
+            {mode === 'login' && 'Entre com suas credenciais para acessar sua conta'}
+            {mode === 'signup' && 'Preencha seus dados para começar'}
+            {mode === 'forgot-password' && 'Digite seu email para receber um link de redefinição'}
           </CardDescription>
         </CardHeader>
 
@@ -157,21 +154,21 @@ export default function Auth() {
             {mode === 'signup' && (
               <Tabs value={signupType} onValueChange={(v) => setSignupType(v as SignupType)}>
                 <TabsList className="grid w-full grid-cols-2">
-                  <TabsTrigger value="student">Student</TabsTrigger>
-                  <TabsTrigger value="teacher">Teacher</TabsTrigger>
+                  <TabsTrigger value="student">Aluno</TabsTrigger>
+                  <TabsTrigger value="teacher">Professor</TabsTrigger>
                 </TabsList>
               </Tabs>
             )}
 
             {mode === 'signup' && (
               <div className="space-y-2">
-                <Label htmlFor="name">Full Name</Label>
+                <Label htmlFor="name">Nome Completo</Label>
                 <div className="relative">
                   <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                   <Input
                     id="name"
                     type="text"
-                    placeholder="John Doe"
+                    placeholder="João Silva"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     className="pl-10"
@@ -188,7 +185,7 @@ export default function Auth() {
                 <Input
                   id="email"
                   type="email"
-                  placeholder="name@example.com"
+                  placeholder="nome@exemplo.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="pl-10"
@@ -199,7 +196,7 @@ export default function Auth() {
 
             {mode !== 'forgot-password' && (
               <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password">Senha</Label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                   <Input
@@ -218,7 +215,7 @@ export default function Auth() {
             {mode === 'signup' && signupType === 'teacher' && (
               <Alert>
                 <AlertDescription>
-                  Teacher accounts require admin approval before you can access the platform.
+                  Contas de professor requerem aprovação do administrador antes que você possa acessar a plataforma.
                 </AlertDescription>
               </Alert>
             )}
@@ -227,9 +224,9 @@ export default function Auth() {
           <CardFooter className="flex flex-col space-y-4">
             <Button type="submit" className="w-full" disabled={isLoading}>
               {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              {mode === 'login' && 'Sign in'}
-              {mode === 'signup' && 'Create account'}
-              {mode === 'forgot-password' && 'Send reset link'}
+              {mode === 'login' && 'Entrar'}
+              {mode === 'signup' && 'Criar conta'}
+              {mode === 'forgot-password' && 'Enviar link de redefinição'}
             </Button>
 
             <div className="text-sm text-center space-y-2">
@@ -240,16 +237,16 @@ export default function Auth() {
                     onClick={() => setMode('forgot-password')}
                     className="text-primary hover:underline"
                   >
-                    Forgot your password?
+                    Esqueceu sua senha?
                   </button>
                   <p className="text-muted-foreground">
-                    Don't have an account?{' '}
+                    Não tem uma conta?{' '}
                     <button
                       type="button"
                       onClick={() => setMode('signup')}
                       className="text-primary hover:underline"
                     >
-                      Sign up
+                      Cadastre-se
                     </button>
                   </p>
                 </>
@@ -257,13 +254,13 @@ export default function Auth() {
 
               {mode === 'signup' && (
                 <p className="text-muted-foreground">
-                  Already have an account?{' '}
+                  Já tem uma conta?{' '}
                   <button
                     type="button"
                     onClick={() => setMode('login')}
                     className="text-primary hover:underline"
                   >
-                    Sign in
+                    Entrar
                   </button>
                 </p>
               )}
@@ -274,7 +271,7 @@ export default function Auth() {
                   onClick={() => setMode('login')}
                   className="text-primary hover:underline"
                 >
-                  Back to login
+                  Voltar ao login
                 </button>
               )}
             </div>

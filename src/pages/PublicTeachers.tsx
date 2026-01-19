@@ -8,18 +8,17 @@ import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-// Common specialties - in production, this could come from an API
 const SPECIALTIES = [
-  'Music',
-  'Languages',
-  'Mathematics',
-  'Science',
-  'Art',
-  'Programming',
+  'Música',
+  'Idiomas',
+  'Matemática',
+  'Ciências',
+  'Arte',
+  'Programação',
   'Fitness',
-  'Business',
-  'Photography',
-  'Cooking',
+  'Negócios',
+  'Fotografia',
+  'Culinária',
 ];
 
 export default function PublicTeachers() {
@@ -47,8 +46,8 @@ export default function PublicTeachers() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    name: 'Teachers Directory',
-    description: 'Find and book classes with expert teachers',
+    name: 'Diretório de Professores',
+    description: 'Encontre e agende aulas com professores especialistas',
     itemListElement: teachers?.map((teacher, index) => ({
       '@type': 'ListItem',
       position: index + 1,
@@ -64,15 +63,15 @@ export default function PublicTeachers() {
   return (
     <>
       <SEOHead
-        title="Find Teachers - Book Classes Online"
-        description="Browse our directory of expert teachers. Find the perfect instructor for your learning goals and book classes online."
-        keywords={['teachers', 'tutors', 'online classes', 'book lessons', ...SPECIALTIES]}
+        title="Encontrar Professores - Agende Aulas Online"
+        description="Navegue pelo nosso diretório de professores especialistas. Encontre o instrutor perfeito para seus objetivos de aprendizado e agende aulas online."
+        keywords={['professores', 'tutores', 'aulas online', 'agendar aulas', ...SPECIALTIES]}
         ogType="website"
         jsonLd={jsonLd}
       />
 
       <div className="min-h-screen bg-background">
-        {/* Header */}
+        {/* Cabeçalho */}
         <header className="border-b bg-card">
           <div className="container mx-auto px-4 py-4">
             <div className="flex items-center justify-between">
@@ -80,32 +79,32 @@ export default function PublicTeachers() {
                 ClassBook
               </Link>
               <Link to="/auth">
-                <Button variant="outline">Sign In</Button>
+                <Button variant="outline">Entrar</Button>
               </Link>
             </div>
           </div>
         </header>
 
-        {/* Hero Section */}
+        {/* Seção Hero */}
         <section className="bg-gradient-to-b from-primary/5 to-background py-12">
           <div className="container mx-auto px-4 text-center">
             <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary mb-4">
               <Users className="h-4 w-4" />
-              Teachers Directory
+              Diretório de Professores
             </div>
             <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-              Find Your Perfect Teacher
+              Encontre seu Professor Ideal
             </h1>
             <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-              Browse our curated selection of expert teachers. Search by name or specialty
-              to find the right instructor for your learning journey.
+              Navegue pela nossa seleção de professores especialistas. Busque por nome ou especialidade
+              para encontrar o instrutor certo para sua jornada de aprendizado.
             </p>
           </div>
         </section>
 
-        {/* Main Content */}
+        {/* Conteúdo Principal */}
         <main className="container mx-auto px-4 py-8">
-          {/* Search */}
+          {/* Busca */}
           <TeacherSearch
             onSearch={handleSearch}
             onSpecialtyChange={handleSpecialtyChange}
@@ -114,11 +113,11 @@ export default function PublicTeachers() {
             currentSpecialty={specialty}
           />
 
-          {/* Results */}
+          {/* Resultados */}
           <div className="mt-8">
             {error ? (
               <div className="text-center py-12">
-                <p className="text-destructive">Failed to load teachers. Please try again.</p>
+                <p className="text-destructive">Falha ao carregar professores. Por favor, tente novamente.</p>
               </div>
             ) : isLoading ? (
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -144,7 +143,7 @@ export default function PublicTeachers() {
                   ))}
                 </div>
 
-                {/* Pagination */}
+                {/* Paginação */}
                 <div className="flex justify-center gap-2 mt-8">
                   <Button
                     variant="outline"
@@ -152,17 +151,17 @@ export default function PublicTeachers() {
                     disabled={page === 1}
                   >
                     <ChevronLeft className="h-4 w-4 mr-1" />
-                    Previous
+                    Anterior
                   </Button>
                   <div className="flex items-center px-4 text-sm text-muted-foreground">
-                    Page {page}
+                    Página {page}
                   </div>
                   <Button
                     variant="outline"
                     onClick={() => setPage((p) => p + 1)}
                     disabled={!teachers || teachers.length < 12}
                   >
-                    Next
+                    Próxima
                     <ChevronRight className="h-4 w-4 ml-1" />
                   </Button>
                 </div>
@@ -170,21 +169,21 @@ export default function PublicTeachers() {
             ) : (
               <div className="text-center py-12">
                 <Users className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                <h3 className="text-lg font-semibold">No teachers found</h3>
+                <h3 className="text-lg font-semibold">Nenhum professor encontrado</h3>
                 <p className="text-muted-foreground mt-1">
                   {search || specialty
-                    ? 'Try adjusting your search filters'
-                    : 'Check back later for new teachers'}
+                    ? 'Tente ajustar os filtros de busca'
+                    : 'Volte mais tarde para ver novos professores'}
                 </p>
               </div>
             )}
           </div>
         </main>
 
-        {/* Footer */}
+        {/* Rodapé */}
         <footer className="border-t bg-card mt-12">
           <div className="container mx-auto px-4 py-8 text-center text-sm text-muted-foreground">
-            © {new Date().getFullYear()} ClassBook. All rights reserved.
+            © {new Date().getFullYear()} ClassBook. Todos os direitos reservados.
           </div>
         </footer>
       </div>
