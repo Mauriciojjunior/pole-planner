@@ -52,6 +52,10 @@ export function TeacherSearch({
     onSpecialtyChange('');
   };
 
+  const handleSpecialtyChange = (value: string) => {
+    onSpecialtyChange(value === '__all__' ? '' : value);
+  };
+
   const hasFilters = currentSearch || currentSpecialty;
 
   return (
@@ -75,12 +79,12 @@ export function TeacherSearch({
           )}
         </div>
 
-        <Select value={currentSpecialty} onValueChange={onSpecialtyChange}>
+        <Select value={currentSpecialty || '__all__'} onValueChange={handleSpecialtyChange}>
           <SelectTrigger className="w-full sm:w-[200px]">
             <SelectValue placeholder="Todas as especialidades" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">Todas as especialidades</SelectItem>
+            <SelectItem value="__all__">Todas as especialidades</SelectItem>
             {specialties.map((specialty) => (
               <SelectItem key={specialty} value={specialty}>
                 {specialty}
