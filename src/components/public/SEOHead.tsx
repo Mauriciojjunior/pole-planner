@@ -85,7 +85,7 @@ export function SEOHead({
     // Cleanup on unmount
     return () => {
       // Reset to default title
-      document.title = 'Class Booking Platform';
+      document.title = 'Pole Planner - Agendamento de Aulas';
     };
   }, [title, description, keywords, ogImage, ogType, canonicalUrl, jsonLd]);
 
