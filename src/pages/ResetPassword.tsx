@@ -9,7 +9,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Loader2, Lock, AlertCircle, CheckCircle } from 'lucide-react';
 import { z } from 'zod';
 
-const passwordSchema = z.string().min(8, 'Password must be at least 8 characters');
+const passwordSchema = z.string().min(8, 'A senha deve ter pelo menos 8 caracteres');
 
 export default function ResetPassword() {
   const navigate = useNavigate();
@@ -39,7 +39,7 @@ export default function ResetPassword() {
     }
 
     if (password !== confirmPassword) {
-      setError('Passwords do not match');
+      setError('As senhas não coincidem');
       return;
     }
 
@@ -54,7 +54,7 @@ export default function ResetPassword() {
         setTimeout(() => navigate('/'), 2000);
       }
     } catch (err) {
-      setError('An unexpected error occurred');
+      setError('Ocorreu um erro inesperado');
     } finally {
       setIsLoading(false);
     }
@@ -65,10 +65,10 @@ export default function ResetPassword() {
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center">
-            Set new password
+            Definir nova senha
           </CardTitle>
           <CardDescription className="text-center">
-            Enter your new password below
+            Digite sua nova senha abaixo
           </CardDescription>
         </CardHeader>
 
@@ -85,13 +85,13 @@ export default function ResetPassword() {
               <Alert>
                 <CheckCircle className="h-4 w-4" />
                 <AlertDescription>
-                  Password updated successfully! Redirecting...
+                  Senha atualizada com sucesso! Redirecionando...
                 </AlertDescription>
               </Alert>
             )}
 
             <div className="space-y-2">
-              <Label htmlFor="password">New Password</Label>
+              <Label htmlFor="password">Nova Senha</Label>
               <div className="relative">
                 <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                 <Input
@@ -107,7 +107,7 @@ export default function ResetPassword() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="confirmPassword">Confirm Password</Label>
+              <Label htmlFor="confirmPassword">Confirmar Senha</Label>
               <div className="relative">
                 <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                 <Input
@@ -126,7 +126,7 @@ export default function ResetPassword() {
           <CardFooter>
             <Button type="submit" className="w-full" disabled={isLoading || success}>
               {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Update password
+              Atualizar senha
             </Button>
           </CardFooter>
         </form>

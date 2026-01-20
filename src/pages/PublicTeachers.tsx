@@ -9,16 +9,16 @@ import { ChevronLeft, ChevronRight, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const SPECIALTIES = [
-  'Música',
-  'Idiomas',
-  'Matemática',
-  'Ciências',
-  'Arte',
-  'Programação',
-  'Fitness',
-  'Negócios',
-  'Fotografia',
-  'Culinária',
+  'Pole Dance',
+  'Pole Fitness',
+  'Pole Exotic',
+  'Pole Sport',
+  'Alongamento',
+  'Acrobacia Aérea',
+  'Lira',
+  'Tecido Acrobático',
+  'Flexibilidade',
+  'Força e Condicionamento',
 ];
 
 export default function PublicTeachers() {
@@ -46,8 +46,8 @@ export default function PublicTeachers() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    name: 'Diretório de Professores',
-    description: 'Encontre e agende aulas com professores especialistas',
+    name: 'Professoras de Pole Dance',
+    description: 'Encontre e agende aulas de pole dance com professoras especialistas',
     itemListElement: teachers?.map((teacher, index) => ({
       '@type': 'ListItem',
       position: index + 1,
@@ -63,9 +63,9 @@ export default function PublicTeachers() {
   return (
     <>
       <SEOHead
-        title="Encontrar Professores - Agende Aulas Online"
-        description="Navegue pelo nosso diretório de professores especialistas. Encontre o instrutor perfeito para seus objetivos de aprendizado e agende aulas online."
-        keywords={['professores', 'tutores', 'aulas online', 'agendar aulas', ...SPECIALTIES]}
+        title="Encontrar Professores de Pole Dance - Agende Aulas"
+        description="Navegue pelo nosso diretório de professores especialistas em pole dance. Encontre a instrutora perfeita para sua jornada e agende aulas."
+        keywords={['professores de pole', 'aulas de pole dance', 'pole fitness', 'agendar aulas de pole', ...SPECIALTIES]}
         ogType="website"
         jsonLd={jsonLd}
       />
@@ -76,7 +76,7 @@ export default function PublicTeachers() {
           <div className="container mx-auto px-4 py-4">
             <div className="flex items-center justify-between">
               <Link to="/" className="text-xl font-bold text-primary">
-                ClassBook
+                Pole Planner
               </Link>
               <Link to="/auth">
                 <Button variant="outline">Entrar</Button>
@@ -93,11 +93,11 @@ export default function PublicTeachers() {
               Diretório de Professores
             </div>
             <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-              Encontre seu Professor Ideal
+              Encontre sua Professora Ideal
             </h1>
             <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-              Navegue pela nossa seleção de professores especialistas. Busque por nome ou especialidade
-              para encontrar o instrutor certo para sua jornada de aprendizado.
+              Navegue pela nossa seleção de professoras especialistas em pole dance. Busque por nome ou especialidade
+              para encontrar a instrutora certa para sua jornada.
             </p>
           </div>
         </section>
@@ -169,11 +169,11 @@ export default function PublicTeachers() {
             ) : (
               <div className="text-center py-12">
                 <Users className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                <h3 className="text-lg font-semibold">Nenhum professor encontrado</h3>
+                <h3 className="text-lg font-semibold">Nenhuma professora encontrada</h3>
                 <p className="text-muted-foreground mt-1">
                   {search || specialty
                     ? 'Tente ajustar os filtros de busca'
-                    : 'Volte mais tarde para ver novos professores'}
+                    : 'Volte mais tarde para ver novas professoras'}
                 </p>
               </div>
             )}
@@ -183,7 +183,7 @@ export default function PublicTeachers() {
         {/* Rodapé */}
         <footer className="border-t bg-card mt-12">
           <div className="container mx-auto px-4 py-8 text-center text-sm text-muted-foreground">
-            © {new Date().getFullYear()} ClassBook. Todos os direitos reservados.
+            © {new Date().getFullYear()} Pole Planner. Todos os direitos reservados.
           </div>
         </footer>
       </div>

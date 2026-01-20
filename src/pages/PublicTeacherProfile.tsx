@@ -62,12 +62,12 @@ export default function PublicTeacherProfile() {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-foreground">Professor Não Encontrado</h1>
-          <p className="text-muted-foreground mt-2">Este perfil de professor não existe ou não está disponível.</p>
+          <h1 className="text-2xl font-bold text-foreground">Professora Não Encontrada</h1>
+          <p className="text-muted-foreground mt-2">Este perfil não existe ou não está disponível.</p>
           <Button asChild className="mt-4">
             <Link to="/teachers">
               <ArrowLeft className="mr-2 h-4 w-4" />
-              Voltar aos Professores
+              Voltar às Professoras
             </Link>
           </Button>
         </div>
@@ -83,7 +83,7 @@ export default function PublicTeacherProfile() {
         description: teacher.bio,
         url: window.location.href,
         image: teacher.avatar_url,
-        jobTitle: 'Professor',
+        jobTitle: 'Professora de Pole Dance',
         knowsAbout: teacher.specialties,
       }
     : undefined;
@@ -107,7 +107,7 @@ export default function PublicTeacherProfile() {
           <div className="container mx-auto px-4 py-4">
             <div className="flex items-center justify-between">
               <Link to="/" className="text-xl font-bold text-primary">
-                ClassBook
+                Pole Planner
               </Link>
               <Link to="/auth">
                 <Button variant="outline">Entrar</Button>
@@ -123,7 +123,7 @@ export default function PublicTeacherProfile() {
             className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-6"
           >
             <ArrowLeft className="mr-1 h-4 w-4" />
-            Voltar aos Professores
+            Voltar às Professoras
           </Link>
 
           {profileLoading ? (
@@ -261,7 +261,7 @@ export default function PublicTeacherProfile() {
                               <Clock className="h-3 w-3" />
                               {classType.duration_minutes} min
                             </span>
-                            <span>Máx {classType.max_students} alunos</span>
+                            <span>Máx {classType.max_students} alunas</span>
                           </div>
                         </div>
                       ))}
@@ -306,7 +306,7 @@ export default function PublicTeacherProfile() {
         {/* Rodapé */}
         <footer className="border-t bg-card mt-12">
           <div className="container mx-auto px-4 py-8 text-center text-sm text-muted-foreground">
-            © {new Date().getFullYear()} ClassBook. Todos os direitos reservados.
+            © {new Date().getFullYear()} Pole Planner. Todos os direitos reservados.
           </div>
         </footer>
       </div>

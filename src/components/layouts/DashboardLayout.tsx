@@ -65,10 +65,10 @@ export function DashboardLayout({ children, navItems, title }: DashboardLayoutPr
           <SidebarHeader className="border-b border-sidebar-border px-4 py-3">
             <div className="flex items-center gap-2">
               <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-sm">CB</span>
+                <span className="text-primary-foreground font-bold text-sm">PP</span>
               </div>
               <span className="font-semibold text-sidebar-foreground group-data-[collapsible=icon]:hidden">
-                ClassBook
+                Pole Planner
               </span>
             </div>
           </SidebarHeader>

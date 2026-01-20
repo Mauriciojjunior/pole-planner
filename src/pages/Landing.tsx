@@ -17,17 +17,17 @@ const features = [
   {
     icon: Calendar,
     title: 'Agendamento Fácil',
-    description: 'Agende aulas com apenas alguns cliques. Veja disponibilidade em tempo real.',
+    description: 'Agende suas aulas de pole com apenas alguns cliques. Veja disponibilidade em tempo real.',
   },
   {
     icon: Users,
-    title: 'Professores Qualificados',
-    description: 'Conecte-se com professores verificados e experientes em diversas áreas.',
+    title: 'Professoras Qualificadas',
+    description: 'Conecte-se com instrutoras verificadas e experientes em pole dance e modalidades aéreas.',
   },
   {
     icon: Clock,
     title: 'Horários Flexíveis',
-    description: 'Encontre aulas que se encaixam na sua agenda, a qualquer hora do dia.',
+    description: 'Encontre aulas que se encaixam na sua agenda, manhã, tarde ou noite.',
   },
   {
     icon: Shield,
@@ -37,32 +37,32 @@ const features = [
   {
     icon: Zap,
     title: 'Confirmação Instantânea',
-    description: 'Receba confirmação imediata de reserva e lembretes.',
+    description: 'Receba confirmação imediata de reserva e lembretes das suas aulas.',
   },
   {
     icon: GraduationCap,
-    title: 'Acompanhe seu Progresso',
-    description: 'Monitore sua jornada de aprendizado com histórico detalhado.',
+    title: 'Acompanhe sua Evolução',
+    description: 'Monitore sua jornada no pole com histórico detalhado de aulas.',
   },
 ];
 
 const testimonials = [
   {
-    name: 'Maria S.',
-    role: 'Aluna',
-    content: 'Encontrei uma professora incrível de yoga e agendei minha primeira aula em minutos!',
+    name: 'Camila S.',
+    role: 'Aluna de Pole',
+    content: 'Encontrei uma professora incrível de pole exotic e agendei minha primeira aula em minutos!',
     rating: 5,
   },
   {
-    name: 'João D.',
-    role: 'Professor',
-    content: 'Gerenciar minha agenda nunca foi tão fácil. Adoro a automação!',
+    name: 'Fernanda D.',
+    role: 'Instrutora',
+    content: 'Gerenciar minha agenda nunca foi tão fácil. A plataforma é intuitiva e prática!',
     rating: 5,
   },
   {
     name: 'Ana R.',
     role: 'Aluna',
-    content: 'O calendário de disponibilidade torna muito fácil encontrar o horário certo.',
+    content: 'O calendário de disponibilidade facilita muito encontrar o horário perfeito para treinar.',
     rating: 5,
   },
 ];
@@ -71,8 +71,8 @@ export default function Landing() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
-    name: 'ClassBook',
-    description: 'Agende aulas com professores especialistas online',
+    name: 'Pole Planner',
+    description: 'Agende aulas de pole dance com professores especialistas',
     applicationCategory: 'EducationalApplication',
     offers: {
       '@type': 'Offer',
@@ -89,13 +89,13 @@ export default function Landing() {
   return (
     <>
       <SEOHead
-        title="ClassBook - Agende Aulas com Professores Especialistas"
-        description="Encontre e agende aulas com professores especialistas online. Agendamento fácil, disponibilidade em tempo real e confirmação instantânea. Comece a aprender hoje!"
+        title="Pole Planner - Agende Aulas de Pole Dance"
+        description="Encontre e agende aulas de pole dance com professores especialistas. Agendamento fácil, disponibilidade em tempo real e confirmação instantânea. Comece sua jornada hoje!"
         keywords={[
-          'aulas online',
-          'agendar aulas',
-          'encontrar professores',
-          'tutoria online',
+          'pole dance',
+          'aulas de pole',
+          'professor de pole dance',
+          'pole fitness',
           'agendamento de aulas',
           'aulas particulares',
         ]}
@@ -109,14 +109,14 @@ export default function Landing() {
           <div className="container mx-auto px-4">
             <nav className="flex h-16 items-center justify-between">
               <Link to="/" className="text-xl font-bold text-primary">
-                ClassBook
+                Pole Planner
               </Link>
               <div className="flex items-center gap-4">
                 <Link
                   to="/teachers"
                   className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  Encontrar Professores
+                  Encontrar Professoras
                 </Link>
                 <Link to="/auth">
                   <Button>Começar</Button>
@@ -132,26 +132,26 @@ export default function Landing() {
           <div className="container relative mx-auto px-4 text-center">
             <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary mb-6">
               <Star className="h-4 w-4 fill-primary" />
-              Mais de 10.000 alunos satisfeitos
+              Mais de 10.000 alunas satisfeitas
             </div>
             <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-6xl lg:text-7xl">
-              Aprenda com os{' '}
-              <span className="text-primary">Melhores Professores</span>
+              Sua Jornada no{' '}
+              <span className="text-primary">Pole Dance</span> Começa Aqui
             </h1>
             <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground sm:text-xl">
-              Encontre professores especialistas, veja disponibilidade em tempo real e agende
-              aulas instantaneamente. Sua jornada de aprendizado começa aqui.
+              Encontre professoras especialistas em pole dance, veja disponibilidade em tempo real e agende
+              aulas instantaneamente. Descubra seu potencial no pole!
             </p>
             <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button asChild size="lg" className="text-base px-8">
                 <Link to="/teachers">
                   <Users className="mr-2 h-5 w-5" />
-                  Ver Professores
+                  Ver Professoras
                 </Link>
               </Button>
               <Button asChild variant="outline" size="lg" className="text-base px-8">
                 <Link to="/auth">
-                  Seja um Professor
+                  Seja uma Instrutora
                 </Link>
               </Button>
             </div>
@@ -163,10 +163,10 @@ export default function Landing() {
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-                Tudo o que Você Precisa para Aprender
+                Tudo o que Você Precisa para Evoluir no Pole
               </h2>
               <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-                Nossa plataforma facilita encontrar professores, agendar aulas e acompanhar seu progresso.
+                Nossa plataforma facilita encontrar professoras, agendar aulas e acompanhar sua evolução.
               </p>
             </div>
             <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
@@ -198,9 +198,9 @@ export default function Landing() {
             </div>
             <div className="grid gap-8 md:grid-cols-3 max-w-4xl mx-auto">
               {[
-                { step: '1', title: 'Encontre um Professor', description: 'Navegue pelo nosso diretório e encontre o professor ideal para seus objetivos.' },
+                { step: '1', title: 'Encontre sua Professora', description: 'Navegue pelo nosso diretório e encontre a instrutora ideal para seus objetivos.' },
                 { step: '2', title: 'Veja a Disponibilidade', description: 'Veja agendas em tempo real e encontre horários que funcionem para você.' },
-                { step: '3', title: 'Agende e Aprenda', description: 'Confirme sua reserva e comece sua jornada de aprendizado.' },
+                { step: '3', title: 'Agende e Treine', description: 'Confirme sua reserva e comece sua jornada no pole dance.' },
               ].map((item) => (
                 <div key={item.step} className="text-center">
                   <div className="inline-flex items-center justify-center h-16 w-16 rounded-full bg-primary text-primary-foreground text-2xl font-bold mb-4">
@@ -222,7 +222,7 @@ export default function Landing() {
                 O Que Nossos Usuários Dizem
               </h2>
               <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-                Junte-se a milhares de alunos e professores satisfeitos
+                Junte-se a milhares de alunas e instrutoras satisfeitas
               </p>
             </div>
             <div className="grid gap-8 md:grid-cols-3 max-w-5xl mx-auto">
@@ -250,16 +250,16 @@ export default function Landing() {
         <section className="py-20 sm:py-32 bg-primary text-primary-foreground">
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-              Pronto para Começar a Aprender?
+              Pronta para Começar sua Jornada?
             </h2>
             <p className="mt-4 text-lg opacity-90 max-w-2xl mx-auto">
-              Junte-se à nossa comunidade de alunos e professores hoje. É grátis para começar.
+              Junte-se à nossa comunidade de alunas e instrutoras hoje. É grátis para começar.
             </p>
             <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button asChild size="lg" variant="secondary" className="text-base px-8">
                 <Link to="/teachers">
                   <CheckCircle className="mr-2 h-5 w-5" />
-                  Encontrar Professores
+                  Encontrar Professoras
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="text-base px-8 bg-transparent border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10">
@@ -276,16 +276,16 @@ export default function Landing() {
           <div className="container mx-auto px-4 py-12">
             <div className="grid gap-8 md:grid-cols-4">
               <div>
-                <div className="text-xl font-bold text-primary mb-4">ClassBook</div>
+                <div className="text-xl font-bold text-primary mb-4">Pole Planner</div>
                 <p className="text-sm text-muted-foreground">
-                  A maneira mais fácil de encontrar e agendar aulas com professores especialistas.
+                  A maneira mais fácil de encontrar e agendar aulas de pole dance com professores especialistas.
                 </p>
               </div>
               <div>
                 <h4 className="font-semibold text-foreground mb-4">Plataforma</h4>
                 <ul className="space-y-2 text-sm text-muted-foreground">
-                  <li><Link to="/teachers" className="hover:text-foreground transition-colors">Encontrar Professores</Link></li>
-                  <li><Link to="/auth" className="hover:text-foreground transition-colors">Seja um Professor</Link></li>
+                  <li><Link to="/teachers" className="hover:text-foreground transition-colors">Encontrar Professoras</Link></li>
+                  <li><Link to="/auth" className="hover:text-foreground transition-colors">Seja uma Instrutora</Link></li>
                 </ul>
               </div>
               <div>
@@ -304,7 +304,7 @@ export default function Landing() {
               </div>
             </div>
             <div className="mt-12 pt-8 border-t text-center text-sm text-muted-foreground">
-              © {new Date().getFullYear()} ClassBook. Todos os direitos reservados.
+              © {new Date().getFullYear()} Pole Planner. Todos os direitos reservados.
             </div>
           </div>
         </footer>
