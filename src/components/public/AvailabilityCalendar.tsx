@@ -57,9 +57,10 @@ export function AvailabilityCalendar({
 
   return (
     <div className="grid gap-6 md:grid-cols-2">
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">Selecione a Data</CardTitle>
+      {/* Calendar Card */}
+      <Card className="border-border/50 shadow-soft">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-lg font-display">Selecione a Data</CardTitle>
         </CardHeader>
         <CardContent>
           <Calendar
@@ -75,65 +76,68 @@ export function AvailabilityCalendar({
               hasSlots: {
                 fontWeight: 'bold',
                 backgroundColor: 'hsl(var(--primary) / 0.1)',
+                color: 'hsl(var(--primary))',
               },
             }}
             locale={ptBR}
-            className="rounded-md border"
+            className="rounded-lg"
           />
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">
-            Horários Disponíveis para {format(selectedDate, "d 'de' MMMM 'de' yyyy", { locale: ptBR })}
+      {/* Slots Card */}
+      <Card className="border-border/50 shadow-soft">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-lg font-display">
+            Horários - {format(selectedDate, "d 'de' MMMM", { locale: ptBR })}
           </CardTitle>
         </CardHeader>
         <CardContent>
           {isLoading ? (
             <div className="space-y-3">
               {[1, 2, 3].map((i) => (
-                <Skeleton key={i} className="h-16 w-full" />
+                <Skeleton key={i} className="h-16 w-full rounded-xl" />
               ))}
             </div>
           ) : selectedDateSlots.length === 0 ? (
-            <p className="text-center text-muted-foreground py-8">
-              Nenhum horário disponível para esta data
-            </p>
+            <div className="text-center py-10 text-muted-foreground">
+              <p>Nenhum horário disponível nesta data.</p>
+              <p className="text-sm mt-1">Selecione outra data no calendário.</p>
+            </div>
           ) : (
             <div className="space-y-3 max-h-[400px] overflow-y-auto pr-2">
               {selectedDateSlots.map((slot, index) => (
                 <div
                   key={index}
-                  className="flex items-center justify-between p-3 rounded-lg border bg-card hover:bg-accent/50 transition-colors"
+                  className={`p-4 rounded-xl border transition-all duration-200 ${
+                    slot.is_bookable
+                      ? 'bg-card border-primary/20 hover:border-primary/40 hover:shadow-sm cursor-pointer'
+                      : 'bg-muted/50 border-border opacity-70'
+                  }`}
                 >
-                  <div className="flex items-center gap-3">
-                    <div className="flex items-center gap-1.5 text-sm font-medium">
-                      <Clock className="h-4 w-4 text-muted-foreground" />
-                      {formatTime(slot.slot_start)} - {formatTime(slot.slot_end)}
-                    </div>
-                    {slot.class_type_name && (
-                      <Badge variant="secondary" className="text-xs">
-                        {slot.class_type_name}
-                      </Badge>
-                    )}
-                  </div>
-                  <div className="flex items-center gap-2">
-                    {slot.spots_available > 0 && (
-                      <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                        <Users className="h-3 w-3" />
-                        {slot.spots_available} {slot.spots_available === 1 ? 'vaga' : 'vagas'}
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="flex items-center gap-2 font-semibold text-foreground">
+                        <Clock className="h-4 w-4 text-primary" />
+                        {formatTime(slot.slot_start)} - {formatTime(slot.slot_end)}
                       </div>
-                    )}
-                    {slot.is_bookable ? (
-                      <Badge className="bg-green-500/10 text-green-600 hover:bg-green-500/20">
-                        Disponível
+                      {slot.class_type_name && (
+                        <p className="text-sm text-muted-foreground mt-1">
+                          {slot.class_type_name}
+                        </p>
+                      )}
+                    </div>
+                    <div className="text-right">
+                      {slot.spots_available > 0 && (
+                        <div className="flex items-center gap-1.5 text-sm text-muted-foreground mb-1">
+                          <Users className="h-3.5 w-3.5" />
+                          {slot.spots_available} {slot.spots_available === 1 ? 'vaga' : 'vagas'}
+                        </div>
+                      )}
+                      <Badge variant={slot.is_bookable ? 'sage' : 'outline'}>
+                        {slot.is_bookable ? 'Disponível' : 'Lotado'}
                       </Badge>
-                    ) : (
-                      <Badge variant="outline" className="text-muted-foreground">
-                        Lotado
-                      </Badge>
-                    )}
+                    </div>
                   </div>
                 </div>
               ))}

@@ -3,7 +3,7 @@ import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { Calendar, MapPin, Sparkles } from 'lucide-react';
+import { Calendar, MapPin, Star } from 'lucide-react';
 
 interface TeacherCardProps {
   teacher: {
@@ -38,15 +38,12 @@ export function TeacherCard({ teacher }: TeacherCardProps) {
   };
 
   return (
-    <Card className="group overflow-hidden card-hover border-border/50 hover:border-primary/30">
-      {/* Gradient accent bar */}
-      <div className="h-1 w-full bg-gradient-to-r from-primary via-accent to-magenta" />
-      
+    <Card className="group overflow-hidden card-elevated">
       <CardContent className="p-6">
         <div className="flex items-start gap-4">
-          <Avatar className="h-16 w-16 ring-2 ring-primary/20 ring-offset-2 ring-offset-background transition-all duration-300 group-hover:ring-primary/40">
+          <Avatar className="h-16 w-16 ring-2 ring-primary/10 ring-offset-2 ring-offset-background transition-all duration-300 group-hover:ring-primary/30">
             <AvatarImage src={teacher.avatar_url || undefined} alt={teacher.name} />
-            <AvatarFallback className="bg-gradient-to-br from-primary/20 to-accent/20 text-primary text-lg font-display font-semibold">
+            <AvatarFallback className="bg-primary/10 text-primary text-lg font-display font-semibold">
               {getInitials(teacher.name)}
             </AvatarFallback>
           </Avatar>
@@ -56,7 +53,7 @@ export function TeacherCard({ teacher }: TeacherCardProps) {
             </h3>
             {teacher.timezone && (
               <div className="flex items-center gap-1.5 text-sm text-muted-foreground mt-1">
-                <MapPin className="h-3.5 w-3.5 text-primary/60" />
+                <MapPin className="h-3.5 w-3.5" />
                 <span className="truncate">{teacher.timezone}</span>
               </div>
             )}
@@ -86,8 +83,8 @@ export function TeacherCard({ teacher }: TeacherCardProps) {
 
         {teacher.is_price_public && teacher.price_cents && teacher.currency && (
           <div className="mt-4 flex items-center gap-2">
-            <Sparkles className="h-4 w-4 text-gold" />
-            <span className="text-lg font-display font-bold text-gradient">
+            <Star className="h-4 w-4 text-accent fill-accent" />
+            <span className="text-lg font-display font-bold text-foreground">
               {formatPrice(teacher.price_cents, teacher.currency)}
             </span>
             <span className="text-sm text-muted-foreground">/aula</span>

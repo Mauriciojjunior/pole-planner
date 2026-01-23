@@ -15,11 +15,11 @@ export default function Landing() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
-    name: 'Pole Planner',
-    description: 'Plataforma completa para gestão de studios de pole dance. Agendamento online, gestão de alunas, pagamentos e relatórios.',
+    name: 'Pole Agenda',
+    description: 'Plataforma completa de agendamento e gestão para studios de pole dance. Encontre aulas, gerencie sua agenda e cresça seu negócio.',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'Web',
-    url: 'https://poleplanner.com.br',
+    url: 'https://poleagenda.com.br',
     offers: {
       '@type': 'Offer',
       price: '0',
@@ -35,16 +35,16 @@ export default function Landing() {
     },
     author: {
       '@type': 'Organization',
-      name: 'Pole Planner',
+      name: 'Pole Agenda',
     },
   };
 
   const organizationJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'Pole Planner',
-    url: 'https://poleplanner.com.br',
-    logo: 'https://poleplanner.com.br/logo.png',
+    name: 'Pole Agenda',
+    url: 'https://poleagenda.com.br',
+    logo: 'https://poleagenda.com.br/logo.png',
     contactPoint: {
       '@type': 'ContactPoint',
       telephone: `+${WHATSAPP_NUMBER}`,
@@ -52,30 +52,30 @@ export default function Landing() {
       availableLanguage: 'Portuguese',
     },
     sameAs: [
-      'https://instagram.com/poleplanner',
+      'https://instagram.com/poleagenda',
     ],
   };
 
   return (
     <>
       <SEOHead
-        title="Pole Planner - Gestão de Studios de Pole Dance"
-        description="Plataforma completa para gestão de studios de pole dance. Agendamento online, gestão de alunas, pagamentos integrados e relatórios detalhados. Comece grátis!"
+        title="Pole Agenda - Agendamento e Vitrine para Pole Dancers"
+        description="Encontre aulas de pole dance ou gerencie seu studio. Agendamento online, gestão de alunas, pagamentos integrados e vitrine profissional. Comece grátis!"
         keywords={[
           'pole dance',
-          'gestão de studio',
-          'agendamento de aulas',
-          'pole fitness',
-          'professora de pole dance',
-          'sistema para studio',
-          'gestão de alunas',
+          'agendamento pole dance',
+          'aulas de pole',
           'studio de pole',
-          'software para studio',
+          'professora de pole dance',
+          'pole fitness',
+          'gestão de studio',
+          'agendar aula pole',
           'pole dance brasil',
+          'plataforma pole dance',
         ]}
         ogType="website"
-        ogImage="https://poleplanner.com.br/og-image.jpg"
-        canonicalUrl="https://poleplanner.com.br"
+        ogImage="https://poleagenda.com.br/og-image.jpg"
+        canonicalUrl="https://poleagenda.com.br"
         jsonLd={jsonLd}
       />
 
@@ -97,7 +97,7 @@ export default function Landing() {
         <Footer whatsappNumber={WHATSAPP_NUMBER} />
         <WhatsAppButton 
           phoneNumber={WHATSAPP_NUMBER}
-          message="Olá! Gostaria de saber mais sobre o Pole Planner para meu studio."
+          message="Olá! Gostaria de saber mais sobre o Pole Agenda para meu studio."
         />
       </div>
     </>
