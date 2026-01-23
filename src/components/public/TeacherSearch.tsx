@@ -59,12 +59,12 @@ export function TeacherSearch({
   const hasFilters = currentSearch || currentSpecialty;
 
   return (
-    <div className="glass-card rounded-2xl p-6">
+    <div className="bg-card border border-border/50 rounded-2xl p-6 shadow-soft">
       <div className="flex flex-col gap-4">
         {/* Header */}
-        <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-          <SlidersHorizontal className="h-4 w-4" />
-          <span>Filtrar Professoras</span>
+        <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+          <SlidersHorizontal className="h-4 w-4 text-primary" />
+          <span>Buscar Professoras</span>
         </div>
 
         {/* Search & Filters */}
@@ -75,7 +75,7 @@ export function TeacherSearch({
               placeholder="Buscar por nome..."
               value={searchInput}
               onChange={handleSearchChange}
-              className="pl-11 pr-10 bg-background/50"
+              className="pl-11 pr-10 h-11"
             />
             {searchInput && (
               <button
@@ -88,11 +88,11 @@ export function TeacherSearch({
           </div>
 
           <Select value={currentSpecialty || '__all__'} onValueChange={handleSpecialtyChange}>
-            <SelectTrigger className="w-full sm:w-[220px] bg-background/50">
-              <SelectValue placeholder="Todas as especialidades" />
+            <SelectTrigger className="w-full sm:w-[220px] h-11">
+              <SelectValue placeholder="Todas as modalidades" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="__all__">Todas as especialidades</SelectItem>
+              <SelectItem value="__all__">Todas as modalidades</SelectItem>
               {specialties.map((specialty) => (
                 <SelectItem key={specialty} value={specialty}>
                   {specialty}
@@ -105,7 +105,7 @@ export function TeacherSearch({
             <Button 
               variant="ghost" 
               onClick={clearFilters} 
-              className="shrink-0 text-muted-foreground hover:text-foreground"
+              className="shrink-0"
             >
               <X className="mr-2 h-4 w-4" />
               Limpar
